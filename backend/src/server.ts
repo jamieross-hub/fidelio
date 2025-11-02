@@ -15,7 +15,7 @@ import {
 } from "./controllers/controllers";
 import { createExpressEndpoints, initServer } from "@ts-rest/express";
 import { contract } from "@api-contract";
-import { deleteSingleTransaction, getSingleTransaction, updateSingleTransaction } from "./models/models";
+import { deleteSingleTransaction, getAllTransactions, getSingleTransaction, updateSingleTransaction } from "./models/models";
 
 dotenv.config();
 
@@ -57,6 +57,12 @@ const router = server.router(contract, {
         deleteTransaction: async ({ req: { user }, params: { id } }) => {
             await deleteSingleTransaction(id, user.id);
             return { status: 204, body: undefined };
+        },
+        getTransactions: async ({ req: { user } }) => {
+            return {
+                status: 200,
+                body: await getAllTransactions(user.id),
+            };
         },
     },
 });
