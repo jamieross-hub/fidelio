@@ -43,3 +43,5 @@ export const MonthDateSchema = z.object({
 });
 
 export const CreateTransactionBodySchema = TransactionSchema.omit({ id: true, createdAt: true, userId: true });
+
+export const UpdateTransactionBodySchema = CreateTransactionBodySchema;

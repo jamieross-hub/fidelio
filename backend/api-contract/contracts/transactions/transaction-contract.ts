@@ -2,7 +2,7 @@ import { initContract } from "@ts-rest/core";
 import z from "zod";
 import { TransactionSchema } from "../../../prisma/generated/zod";
 import { yearsFromNow } from "@/helpers/dates";
-import { CreateTransactionBodySchema, MonthDateSchema, monthNames, MonthSchema } from "./types";
+import { CreateTransactionBodySchema, MonthDateSchema, monthNames, MonthSchema, UpdateTransactionBodySchema } from "./types";
 
 const client = initContract();
 
@@ -14,6 +14,18 @@ export const transactionContract = client.router({
         pathParams: z.object({
             id: z.uuidv4(),
         }),
+        responses: {
+            200: TransactionSchema,
+        },
+    },
+    updateTransaction: {
+        method: "PUT",
+        path: "/transactions/:id",
+        summary: "Update a transaction",
+        pathParams: z.object({
+            id: z.uuidv4(),
+        }),
+        body: UpdateTransactionBodySchema,
         responses: {
             200: TransactionSchema,
         },
