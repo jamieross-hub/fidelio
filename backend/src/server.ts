@@ -15,7 +15,13 @@ import {
 } from "./controllers/controllers";
 import { createExpressEndpoints, initServer } from "@ts-rest/express";
 import { contract } from "@api-contract";
-import { deleteSingleTransaction, getAllTransactions, getSingleTransaction, updateSingleTransaction } from "./models/models";
+import {
+    createNewTransaction,
+    deleteSingleTransaction,
+    getAllTransactions,
+    getSingleTransaction,
+    updateSingleTransaction,
+} from "./models/models";
 
 dotenv.config();
 
@@ -46,9 +52,15 @@ const router = server.router(contract, {
         },
     },
     transactions: {
-        getTransaction: async ({ req, params: { id } }) => {
-            const transaction = await getSingleTransaction(id, req.user.id);
+        getTransaction: async ({ req: { user }, params: { id } }) => {
+            const transaction = await getSingleTransaction(id, user.id);
             return transaction ? { status: 200, body: transaction } : { status: 404, body: { message: "Transaction not found" } };
+        },
+        createTransaction: async ({ req: { user }, body }) => {
+            return {
+                status: 200,
+                body: await createNewTransaction(body, user.id),
+            };
         },
         updateTransaction: async ({ req: { user }, body, params: { id } }) => {
             const transaction = await updateSingleTransaction(body, id, user.id);

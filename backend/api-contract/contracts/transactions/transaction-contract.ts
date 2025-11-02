@@ -18,6 +18,15 @@ export const transactionContract = client.router({
             200: TransactionSchema,
         },
     },
+    createTransaction: {
+        method: "POST",
+        path: "/transactions",
+        summary: "Create a new transaction",
+        body: CreateTransactionBodySchema,
+        responses: {
+            200: TransactionSchema,
+        },
+    },
     updateTransaction: {
         method: "PUT",
         path: "/transactions/:id",
@@ -50,15 +59,6 @@ export const transactionContract = client.router({
         }),
         responses: {
             200: z.array(TransactionSchema),
-        },
-    },
-    createTransaction: {
-        method: "POST",
-        path: "/transactions",
-        summary: "Create a new transaction",
-        body: CreateTransactionBodySchema,
-        responses: {
-            200: TransactionSchema,
         },
     },
     getTransactionsForYear: {

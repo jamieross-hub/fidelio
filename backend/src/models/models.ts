@@ -67,10 +67,9 @@ export async function getMonthTransactions(year: number, month: number, userId: 
     }
 }
 
-export async function createNewTransaction(data: Omit<Transaction, "id" | "createdAt">) {
+export async function createNewTransaction(data: Omit<Transaction, "id" | "createdAt" | "userId">, userId: string) {
     try {
-        const transaction = await prisma.transaction.create({ data });
-        return transaction;
+        return await prisma.transaction.create({ data: { ...data, userId } });
     } catch (err: any) {
         throw err;
     } finally {
