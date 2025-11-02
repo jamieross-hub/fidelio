@@ -7,6 +7,17 @@ import { CreateTransactionBodySchema, MonthDateSchema, monthNames, MonthSchema }
 const client = initContract();
 
 export const transactionContract = client.router({
+    getTransaction: {
+        method: "GET",
+        path: "/transactions/:id",
+        summary: "Retrieve a single transaction",
+        pathParams: z.object({
+            id: z.uuidv4(),
+        }),
+        responses: {
+            200: TransactionSchema,
+        },
+    },
     getTransactions: {
         method: "GET",
         path: "/transactions",
