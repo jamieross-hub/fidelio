@@ -20,6 +20,7 @@ import {
     deleteSingleTransaction,
     getAllTransactions,
     getSingleTransaction,
+    getYearTransactions,
     updateSingleTransaction,
 } from "./models/models";
 
@@ -74,6 +75,12 @@ const router = server.router(contract, {
             return {
                 status: 200,
                 body: await getAllTransactions(user.id),
+            };
+        },
+        getTransactionsForYear: async ({ req: { user }, params: { year } }) => {
+            return {
+                status: 200,
+                body: await getYearTransactions(year, user.id),
             };
         },
     },
