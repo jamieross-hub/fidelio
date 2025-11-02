@@ -1,5 +1,4 @@
 import express from "express";
-import type { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { authenticateJWT } from "./jwt/jwt";
@@ -14,13 +13,13 @@ import {
     getTransaction,
     updateTransaction,
 } from "./controllers/controllers";
-import { initServer } from "@ts-rest/express";
-import { userContract } from "@api-contract/contracts/users/user-contract";
-import { transactionContract } from "@api-contract/contracts/transactions/transaction-contract";
+import { createExpressEndpoints, initServer } from "@ts-rest/express";
+import { contract } from "@api-contract";
+import { getSingleTransaction, updateSingleTransaction } from "./models/models";
 
 dotenv.config();
 
-const app: Express = express();
+const app = express();
 const port = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
@@ -29,22 +28,36 @@ app.use(authenticateJWT);
 
 const server = initServer();
 
-server.router(userContract, {
-    validateJWT: async () => {
-        return {
-            status: 200,
-            body: {
-                msg: "Your JWT is valid",
-            },
-        };
+const router = server.router(contract, {
+    users: {
+        validateJWT: async () => {
+            return {
+                status: 200,
+                body: {
+                    msg: "Your JWT is valid",
+                },
+            };
+        },
+        getUser: async ({ req }) => {
+            return {
+                status: 200,
+                body: req.user!,
+            };
+        },
     },
-    getUser: async ({ req }) => {
-        return {
-            status: 200,
-            body: req.user!,
-        };
+    transactions: {
+        getTransaction: async ({ req, params: { id } }) => {
+            const transaction = await getSingleTransaction(id, req.user.id);
+            return transaction ? { status: 200, body: transaction } : { status: 404, body: { message: "Transaction not found" } };
+        },
+        updateTransaction: async ({ req: { user }, body, params: { id } }) => {
+            const transaction = await updateSingleTransaction(body, id, user.id);
+            return { status: 200, body: transaction };
+        },
     },
 });
+
+createExpressEndpoints(contract, router, app);
 
 // app.get("/api/validateJWT", (_request: Request, response: Response) => {
 //     response.status(200).send({ msg: "Your JWT is valid" });

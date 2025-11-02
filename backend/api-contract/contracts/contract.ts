@@ -15,5 +15,9 @@ export const contract = client.router(
             Authorization: z.string(),
         },
         pathPrefix: "/api",
+        commonResponses: {
+            404: client.type<{ message: string }>(),
+            500: client.type<{ message: string }>(),
+        },
     }
 );

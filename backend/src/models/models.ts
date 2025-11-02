@@ -105,7 +105,7 @@ export async function getSingleTransaction(id: string, userId: string) {
     }
 }
 
-export async function updateSingleTransaction(data: Omit<Transaction, "createdAt" | "userId">, id: string, userId: string) {
+export async function updateSingleTransaction(data: Omit<Transaction, "id" | "createdAt" | "userId">, id: string, userId: string) {
     try {
         return await prisma.transaction.update({ where: { id, userId }, data });
     } catch (err: any) {
