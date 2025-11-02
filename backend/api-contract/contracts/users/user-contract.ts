@@ -1,5 +1,5 @@
 import { initContract } from "@ts-rest/core";
-import { UserSchema } from "../../prisma/generated/zod";
+import { UserSchema } from "../../../prisma/generated/zod";
 
 const client = initContract();
 
