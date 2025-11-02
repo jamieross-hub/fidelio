@@ -1,5 +1,4 @@
 import z from "zod";
-import { Transaction } from "../../../prisma/generated";
 import { TransactionSchema } from "../../../prisma/generated/zod";
 
 export type MonthName =
@@ -42,3 +41,5 @@ export const MonthDateSchema = z.object({
     date: z.date(),
     transactions: z.array(TransactionSchema),
 });
+
+export const CreateTransactionBodySchema = TransactionSchema.omit({ id: true, createdAt: true, userId: true });

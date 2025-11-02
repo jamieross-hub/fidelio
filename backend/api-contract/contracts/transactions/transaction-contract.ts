@@ -2,7 +2,7 @@ import { initContract } from "@ts-rest/core";
 import z from "zod";
 import { TransactionSchema } from "../../../prisma/generated/zod";
 import { yearsFromNow } from "@/helpers/dates";
-import { MonthDateSchema, monthNames, MonthSchema } from "./types";
+import { CreateTransactionBodySchema, MonthDateSchema, monthNames, MonthSchema } from "./types";
 
 const client = initContract();
 
@@ -16,6 +16,15 @@ export const transactionContract = client.router({
         }),
         responses: {
             200: z.array(TransactionSchema),
+        },
+    },
+    createTransaction: {
+        method: "POST",
+        path: "/transactions",
+        summary: "Create a new transaction",
+        body: CreateTransactionBodySchema,
+        responses: {
+            200: TransactionSchema,
         },
     },
     getTransactionsForYear: {
@@ -35,7 +44,7 @@ export const transactionContract = client.router({
     getTransactionsForMonth: {
         method: "GET",
         path: "/transactions/:year/:month",
-        summary: "Retrieve a list of the current user's transactions for a given year",
+        summary: "Retrieve a list of the current user's transactions for a given year & month",
         pathParams: z.object({
             year: z.coerce
                 .number()
