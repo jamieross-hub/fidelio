@@ -7,7 +7,7 @@ const client = initContract();
 export const userContract = client.router({
     validateJWT: {
         method: "GET",
-        path: "/user",
+        path: "/validateJWT",
         summary: "Validate the current user's JWT",
         responses: {
             200: z.object({ msg: z.literal("Your JWT is valid") }),
