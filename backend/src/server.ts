@@ -35,13 +35,10 @@ app.get("/api/transactions/:year", getYearData);
 app.get("/api/transactions/:year/:month", getMonthData);
 
 app.post("/api/transactions", postNewTransaction);
-
 app.get("/api/transactions", getTransactionList);
 
 app.get("/api/transactions/:id", getTransaction);
-
 app.put("/api/transactions/:id", updateTransaction);
-
 app.delete("/api/transactions/:id", deleteTransaction);
 
 app.use(handleCustomErrors);
