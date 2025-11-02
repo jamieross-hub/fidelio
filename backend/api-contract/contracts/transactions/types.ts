@@ -1,5 +1,6 @@
 import z from "zod";
 import { Transaction } from "../../../prisma/generated";
+import { TransactionSchema } from "../../../prisma/generated/zod";
 
 export type MonthName =
     | "January"
@@ -15,7 +16,7 @@ export type MonthName =
     | "November"
     | "December";
 
-const monthNames: MonthName[] = [
+export const monthNames: MonthName[] = [
     "January",
     "February",
     "March",
@@ -30,21 +31,14 @@ const monthNames: MonthName[] = [
     "December",
 ] as const;
 
-export interface MonthSerializer {
-    monthName: MonthName;
-    income: number;
-    expenses: number;
-    remaining: number;
-}
-
-export interface MonthDate {
-    date: string;
-    transactions: Transaction[];
-}
-
 export const MonthSchema = z.object({
     monthName: z.enum(monthNames),
     income: z.number(),
     expenses: z.number(),
     remaining: z.number(),
+});
+
+export const MonthDateSchema = z.object({
+    date: z.date(),
+    transactions: z.array(TransactionSchema),
 });
