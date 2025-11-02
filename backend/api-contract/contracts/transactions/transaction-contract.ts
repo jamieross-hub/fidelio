@@ -30,6 +30,17 @@ export const transactionContract = client.router({
             200: TransactionSchema,
         },
     },
+    deleteTransaction: {
+        method: "DELETE",
+        path: "/transactions/:id",
+        summary: "Delete a transaction",
+        pathParams: z.object({
+            id: z.uuidv4(),
+        }),
+        responses: {
+            204: client.noBody(),
+        },
+    },
     getTransactions: {
         method: "GET",
         path: "/transactions",
