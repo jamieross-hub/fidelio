@@ -1,3 +1,3 @@
-import { contract } from "./contract";
+import { contract } from "./contracts/contract";
 
 export { contract };
