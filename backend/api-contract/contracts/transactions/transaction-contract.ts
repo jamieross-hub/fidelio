@@ -87,7 +87,7 @@ export const transactionContract = client.router({
             month: z.enum(monthNames, { error: `That is not a valid month, must be one of: [${monthNames.join(", ")}]` }),
         }),
         responses: {
-            200: MonthDateSchema,
+            200: z.array(MonthDateSchema),
         },
     },
 });

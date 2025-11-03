@@ -38,7 +38,7 @@ export const MonthSchema = z.object({
 });
 
 export const MonthDateSchema = z.object({
-    date: z.date(),
+    date: z.string(),
     transactions: z.array(TransactionSchema),
 });
 

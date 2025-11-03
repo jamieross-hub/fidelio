@@ -19,10 +19,12 @@ import {
     createNewTransaction,
     deleteSingleTransaction,
     getAllTransactions,
+    getMonthTransactions,
     getSingleTransaction,
     getYearTransactions,
     updateSingleTransaction,
 } from "./models/models";
+import { monthNames } from "@api-contract/contracts/transactions/types";
 
 dotenv.config();
 
@@ -81,6 +83,12 @@ const router = server.router(contract, {
             return {
                 status: 200,
                 body: await getYearTransactions(year, user.id),
+            };
+        },
+        getTransactionsForMonth: async ({ req: { user }, params: { year, month } }) => {
+            return {
+                status: 200,
+                body: await getMonthTransactions(year, monthNames.indexOf(month), user.id),
             };
         },
     },
