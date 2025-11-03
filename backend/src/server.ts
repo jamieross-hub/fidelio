@@ -30,18 +30,10 @@ const server = initServer();
 const router = server.router(contract, {
     users: {
         validateJWT: async () => {
-            return {
-                status: 200,
-                body: {
-                    msg: "Your JWT is valid",
-                },
-            };
+            return { status: 200, body: { msg: "Your JWT is valid" } };
         },
         getUser: async ({ req }) => {
-            return {
-                status: 200,
-                body: req.user!,
-            };
+            return { status: 200, body: req.user! };
         },
     },
     transactions: {
@@ -50,36 +42,23 @@ const router = server.router(contract, {
             return transaction ? { status: 200, body: transaction } : { status: 404, body: { message: "Transaction not found" } };
         },
         createTransaction: async ({ req: { user }, body }) => {
-            return {
-                status: 200,
-                body: await createNewTransaction(body, user.id),
-            };
+            return { status: 200, body: await createNewTransaction(body, user.id) };
         },
         updateTransaction: async ({ req: { user }, body, params: { id } }) => {
-            const transaction = await updateSingleTransaction(body, id, user.id);
-            return { status: 200, body: transaction };
+            return { status: 200, body: await updateSingleTransaction(body, id, user.id) };
         },
         deleteTransaction: async ({ req: { user }, params: { id } }) => {
             await deleteSingleTransaction(id, user.id);
             return { status: 204, body: undefined };
         },
         getTransactions: async ({ req: { user } }) => {
-            return {
-                status: 200,
-                body: await getAllTransactions(user.id),
-            };
+            return { status: 200, body: await getAllTransactions(user.id) };
         },
         getTransactionsForYear: async ({ req: { user }, params: { year } }) => {
-            return {
-                status: 200,
-                body: await getYearTransactions(year, user.id),
-            };
+            return { status: 200, body: await getYearTransactions(year, user.id) };
         },
         getTransactionsForMonth: async ({ req: { user }, params: { year, month } }) => {
-            return {
-                status: 200,
-                body: await getMonthTransactions(year, monthNames.indexOf(month), user.id),
-            };
+            return { status: 200, body: await getMonthTransactions(year, monthNames.indexOf(month), user.id) };
         },
     },
 });
