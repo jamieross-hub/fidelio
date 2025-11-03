@@ -3,16 +3,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { authenticateJWT } from "./jwt/jwt";
 import { handleCustomErrors } from "./errors/middleware";
-import {
-    getMonthData,
-    getUserData,
-    getYearData,
-    postNewTransaction,
-    getTransactionList,
-    deleteTransaction,
-    getTransaction,
-    updateTransaction,
-} from "./controllers/controllers";
 import { createExpressEndpoints, initServer } from "@ts-rest/express";
 import { contract } from "@api-contract";
 import {
@@ -95,23 +85,6 @@ const router = server.router(contract, {
 });
 
 createExpressEndpoints(contract, router, app);
-
-// app.get("/api/validateJWT", (_request: Request, response: Response) => {
-//     response.status(200).send({ msg: "Your JWT is valid" });
-// });
-
-// app.get("/api/user", getUserData);
-
-// app.get("/api/transactions/:year", getYearData);
-
-// app.get("/api/transactions/:year/:month", getMonthData);
-
-// app.post("/api/transactions", postNewTransaction);
-// app.get("/api/transactions", getTransactionList);
-
-// app.get("/api/transactions/:id", getTransaction);
-// app.put("/api/transactions/:id", updateTransaction);
-// app.delete("/api/transactions/:id", deleteTransaction);
 
 app.use(handleCustomErrors);
 
