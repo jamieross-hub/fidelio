@@ -1,4 +1,5 @@
-import { Transaction } from "../../prisma/generated";
+import { MonthName } from "@api-contract/contracts/transactions/types";
+import { Transaction } from "../prisma/generated";
 
 export interface JWT {
     exp: Date;
@@ -9,20 +10,6 @@ export interface JWT {
     service: string;
     session_id: number;
 }
-
-type MonthName =
-    | "January"
-    | "February"
-    | "March"
-    | "April"
-    | "May"
-    | "June"
-    | "July"
-    | "August"
-    | "September"
-    | "October"
-    | "November"
-    | "December";
 
 export interface MonthSerializer {
     monthName: MonthName;

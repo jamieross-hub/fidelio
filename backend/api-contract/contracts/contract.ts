@@ -12,7 +12,7 @@ export const contract = client.router(
     },
     {
         baseHeaders: {
-            Authorization: z.string(),
+            authorization: z.string(),
         },
         pathPrefix: "/api",
         commonResponses: {

@@ -2,32 +2,32 @@ import z from "zod";
 import { TransactionSchema } from "../../../prisma/generated/zod";
 
 export type MonthName =
-    | "January"
-    | "February"
-    | "March"
-    | "April"
-    | "May"
-    | "June"
-    | "July"
-    | "August"
-    | "September"
-    | "October"
-    | "November"
-    | "December";
+    | "january"
+    | "february"
+    | "march"
+    | "april"
+    | "may"
+    | "june"
+    | "july"
+    | "august"
+    | "september"
+    | "october"
+    | "november"
+    | "december";
 
 export const monthNames: MonthName[] = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
 ] as const;
 
 export const MonthSchema = z.object({
@@ -42,6 +42,14 @@ export const MonthDateSchema = z.object({
     transactions: z.array(TransactionSchema),
 });
 
-export const CreateTransactionBodySchema = TransactionSchema.omit({ id: true, createdAt: true, userId: true });
+export const CreateTransactionBodySchema = TransactionSchema.pick({
+    amountInPence: true,
+    firstLastDayOfMonth: true,
+    isExpense: true,
+    isRecurring: true,
+    name: true,
+    recurrenceRate: true,
+    recurrenceType: true,
+}).extend({ amountInPence: z.number() });
 
 export const UpdateTransactionBodySchema = CreateTransactionBodySchema;

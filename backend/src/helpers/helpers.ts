@@ -191,18 +191,18 @@ export const getTransactionDatesInMonth = (transaction: Transaction, daysInMonth
 
 export const groupTransactionsByMonth = (transactions: Transaction[], year: number): MonthSerializer[] => {
     const months: MonthSerializer[] = [
-        { monthName: "January", income: 0, expenses: 0, remaining: 0 },
-        { monthName: "February", income: 0, expenses: 0, remaining: 0 },
-        { monthName: "March", income: 0, expenses: 0, remaining: 0 },
-        { monthName: "April", income: 0, expenses: 0, remaining: 0 },
-        { monthName: "May", income: 0, expenses: 0, remaining: 0 },
-        { monthName: "June", income: 0, expenses: 0, remaining: 0 },
-        { monthName: "July", income: 0, expenses: 0, remaining: 0 },
-        { monthName: "August", income: 0, expenses: 0, remaining: 0 },
-        { monthName: "September", income: 0, expenses: 0, remaining: 0 },
-        { monthName: "October", income: 0, expenses: 0, remaining: 0 },
-        { monthName: "November", income: 0, expenses: 0, remaining: 0 },
-        { monthName: "December", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "january", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "february", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "march", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "april", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "may", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "june", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "july", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "august", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "september", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "october", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "november", income: 0, expenses: 0, remaining: 0 },
+        { monthName: "december", income: 0, expenses: 0, remaining: 0 },
     ];
 
     transactions.forEach((transaction) => {

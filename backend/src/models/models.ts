@@ -8,8 +8,6 @@ export async function createUser(data: { authId: string; username: string; email
         return await prisma.user.create({ data });
     } catch (err) {
         throw err;
-    } finally {
-        prisma.$disconnect();
     }
 }
 
@@ -18,8 +16,6 @@ export async function getUser(authId: string): Promise<User | null> {
         return await prisma.user.findUnique({ where: { authId } });
     } catch (err: any) {
         throw err;
-    } finally {
-        prisma.$disconnect();
     }
 }
 
@@ -42,8 +38,6 @@ export async function getYearTransactions(year: number, userId: string): Promise
         return groupedTransactions;
     } catch (err: any) {
         throw err;
-    } finally {
-        prisma.$disconnect();
     }
 }
 
@@ -62,18 +56,14 @@ export async function getMonthTransactions(year: number, month: number, userId: 
         return groupTransactionsByDaysInMonth(transactions, year, month);
     } catch (err: any) {
         throw err;
-    } finally {
-        prisma.$disconnect();
     }
 }
 
-export async function createNewTransaction(data: Omit<Transaction, "id" | "createdAt" | "userId">, userId: string) {
+export async function createNewTransaction(data: Pick<Transaction, "id" | "createdAt" | "userId">, userId: string) {
     try {
         return await prisma.transaction.create({ data: { ...data, userId } });
     } catch (err: any) {
         throw err;
-    } finally {
-        prisma.$disconnect();
     }
 }
 
@@ -89,8 +79,6 @@ export async function getAllTransactions(userId: string): Promise<Transaction[]>
         });
     } catch (err: any) {
         throw err;
-    } finally {
-        prisma.$disconnect();
     }
 }
 
@@ -99,8 +87,6 @@ export async function getSingleTransaction(id: string, userId: string) {
         return await prisma.transaction.findUnique({ where: { id, userId } });
     } catch (err: any) {
         throw err;
-    } finally {
-        prisma.$disconnect();
     }
 }
 
@@ -109,8 +95,6 @@ export async function updateSingleTransaction(data: Omit<Transaction, "id" | "cr
         return await prisma.transaction.update({ where: { id, userId }, data });
     } catch (err: any) {
         throw err;
-    } finally {
-        prisma.$disconnect();
     }
 }
 
