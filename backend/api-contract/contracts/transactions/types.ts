@@ -42,19 +42,25 @@ export const MonthDateSchema = z.object({
     transactions: z.array(TransactionSchema),
 });
 
+export type RecurrenceTypeChoices = "day" | "week" | "month";
+export const recurrenceTypeChoices: RecurrenceTypeChoices[] = ["day", "week", "month"];
+
+export type FirstLastDayOfMonthChoices = "first_business" | "last_business" | "last" | "specific";
+export const firstLastDayOfMonthChoices: FirstLastDayOfMonthChoices[] = ["first_business", "last_business", "last", "specific"];
+
 export const CreateTransactionBodySchema = TransactionSchema.omit({
     id: true,
     createdAt: true,
     userId: true,
 }).extend({
     amountInPence: z.number(),
-    startDate: z.coerce.date().nullable().optional(),
-    finishDate: z.coerce.date().nullable().optional(),
-    recurrenceType: z.string().nullable().optional(),
-    recurrenceRate: z.number().int().nullable().optional(),
-    specificDayOfWeek: z.number().int().nullable().optional(),
-    specificDayOfMonth: z.number().int().nullable().optional(),
-    firstLastDayOfMonth: z.string().nullable().optional(),
+    startDate: z.date().nullable().optional(),
+    finishDate: z.date().nullable().optional(),
+    recurrenceType: z.enum(recurrenceTypeChoices).nullable().optional(),
+    recurrenceRate: z.number().nullable().optional(),
+    specificDayOfWeek: z.number().min(0).max(6).nullable().optional(),
+    specificDayOfMonth: z.number().min(1).max(28).nullable().optional(),
+    firstLastDayOfMonth: z.enum(firstLastDayOfMonthChoices).nullable().optional(),
 });
 
 export type CreateTransactionBodySchema = z.infer<typeof CreateTransactionBodySchema>;
