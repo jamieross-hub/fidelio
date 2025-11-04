@@ -29,6 +29,8 @@ import { cn } from "@/lib/utils";
 import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
 import { CalendarIcon, LoaderCircle } from "lucide-vue-next";
 import type { DateValue } from "@internationalized/date";
+import { apiClient } from "@/api/client";
+import type { CreateTransactionBodySchema } from "@api-contract/contracts/transactions/types";
 
 type FirstLastDayOfMonth = "first_business" | "last_business" | "last" | "specific";
 
@@ -168,7 +170,7 @@ const exitLink = computed(() => {
 
 const transactionsForm = computed(() => {
     if (isExpense.value !== null && amountInPence.value !== undefined && isRecurring.value !== null) {
-        const params: CreateTransactionInput = {
+        const params: CreateTransactionBodySchema = {
             name: transactionName.value,
             isExpense: isExpense.value,
             amountInPence: amountInPence.value,
@@ -209,7 +211,8 @@ async function createTransaction() {
     if (transactionsForm.value) {
         try {
             loading.value = true;
-            await transactionApi.apiTransactionsPost({ createTransactionInput: transactionsForm.value });
+            // await transactionApi.apiTransactionsPost({ createTransactionInput: transactionsForm.value });
+            await apiClient.transactions.createTransaction({ body: transactionsForm.value });
             step.value++;
         } catch (err: any) {
             console.error(err);

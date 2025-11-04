@@ -1,8 +1,8 @@
 import { initContract } from "@ts-rest/core";
 import z from "zod";
 import { TransactionSchema } from "../../../prisma/generated/zod";
-import { yearsFromNow } from "@/helpers/dates";
 import { CreateTransactionBodySchema, MonthDateSchema, monthNames, MonthSchema, UpdateTransactionBodySchema } from "./types";
+import { yearsFromNow } from "../../../src/helpers/dates";
 
 const client = initContract();
 
