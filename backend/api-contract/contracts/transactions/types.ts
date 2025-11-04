@@ -42,14 +42,23 @@ export const MonthDateSchema = z.object({
     transactions: z.array(TransactionSchema),
 });
 
-export const CreateTransactionBodySchema = TransactionSchema.pick({
-    amountInPence: true,
-    firstLastDayOfMonth: true,
-    isExpense: true,
-    isRecurring: true,
-    name: true,
-    recurrenceRate: true,
-    recurrenceType: true,
-}).extend({ amountInPence: z.number() });
+export const CreateTransactionBodySchema = TransactionSchema.omit({
+    id: true,
+    createdAt: true,
+    userId: true,
+}).extend({
+    amountInPence: z.number(),
+    startDate: z.coerce.date().nullable().optional(),
+    finishDate: z.coerce.date().nullable().optional(),
+    recurrenceType: z.string().nullable().optional(),
+    recurrenceRate: z.number().int().nullable().optional(),
+    specificDayOfWeek: z.number().int().nullable().optional(),
+    specificDayOfMonth: z.number().int().nullable().optional(),
+    firstLastDayOfMonth: z.string().nullable().optional(),
+});
+
+export type CreateTransactionBodySchema = z.infer<typeof CreateTransactionBodySchema>;
 
 export const UpdateTransactionBodySchema = CreateTransactionBodySchema;
+
+export type UpdateTransactionBodySchema = z.infer<typeof UpdateTransactionBodySchema>;

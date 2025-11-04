@@ -2,6 +2,7 @@ import { prisma } from "../../prisma/connect";
 import { Transaction, User } from "../../prisma/generated";
 import { groupTransactionsByDaysInMonth, groupTransactionsByMonth } from "../helpers/helpers";
 import { MonthSerializer } from "../../@types/types";
+import { CreateTransactionBodySchema, UpdateTransactionBodySchema } from "@api-contract/contracts/transactions/types";
 
 export async function createUser(data: { authId: string; username: string; email: string; image: string }): Promise<User> {
     try {
@@ -21,8 +22,6 @@ export async function getUser(authId: string): Promise<User | null> {
 
 export async function getYearTransactions(year: number, userId: string): Promise<MonthSerializer[]> {
     try {
-        const s = performance.now();
-
         const transactions = await prisma.transaction.findMany({
             where: {
                 userId,
@@ -59,7 +58,7 @@ export async function getMonthTransactions(year: number, month: number, userId: 
     }
 }
 
-export async function createNewTransaction(data: Pick<Transaction, "id" | "createdAt" | "userId">, userId: string) {
+export async function createNewTransaction(data: CreateTransactionBodySchema, userId: string) {
     try {
         return await prisma.transaction.create({ data: { ...data, userId } });
     } catch (err: any) {
@@ -90,7 +89,7 @@ export async function getSingleTransaction(id: string, userId: string) {
     }
 }
 
-export async function updateSingleTransaction(data: Omit<Transaction, "id" | "createdAt" | "userId">, id: string, userId: string) {
+export async function updateSingleTransaction(data: UpdateTransactionBodySchema, id: string, userId: string) {
     try {
         return await prisma.transaction.update({ where: { id, userId }, data });
     } catch (err: any) {
