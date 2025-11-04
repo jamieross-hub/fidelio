@@ -54,8 +54,8 @@ export const CreateTransactionBodySchema = TransactionSchema.omit({
     userId: true,
 }).extend({
     amountInPence: z.number(),
-    startDate: z.date().nullable().optional(),
-    finishDate: z.date().nullable().optional(),
+    startDate: z.coerce.date<string>().nullable().optional(),
+    finishDate: z.coerce.date<string>().nullable().optional(),
     recurrenceType: z.enum(recurrenceTypeChoices).nullable().optional(),
     recurrenceRate: z.number().nullable().optional(),
     specificDayOfWeek: z.number().min(0).max(6).nullable().optional(),
