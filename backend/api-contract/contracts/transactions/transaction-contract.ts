@@ -47,7 +47,7 @@ export const transactionContract = client.router({
             id: z.uuidv4(),
         }),
         responses: {
-            204: client.noBody(),
+            204: z.undefined(),
         },
     },
     getTransactions: {

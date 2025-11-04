@@ -16,8 +16,8 @@ export const contract = client.router(
         },
         pathPrefix: "/api",
         commonResponses: {
-            404: client.type<{ message: string }>(),
-            500: client.type<{ message: string }>(),
+            404: z.object({ message: z.string() }),
+            500: z.object({ message: z.string() }),
         },
     }
 );

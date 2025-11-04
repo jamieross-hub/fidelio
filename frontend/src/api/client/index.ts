@@ -25,6 +25,6 @@ export function getApiUrl() {
 export const apiClient = initClient(contract, {
     baseUrl: getApiUrl(),
     baseHeaders: {
-        Authorization: getAuthToken(),
+        authorization: () => getAuthToken(),
     },
 });
