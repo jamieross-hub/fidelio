@@ -1,5 +1,6 @@
 import { contract } from "@api-contract";
-import { initClient } from "@ts-rest/core";
+import { initClient, tsRestFetchApi, type ApiFetcherArgs } from "@ts-rest/core";
+import z from "zod";
 
 export function getAuthToken() {
     const jwt = localStorage.getItem("jwt") ?? "";
@@ -26,5 +27,18 @@ export const apiClient = initClient(contract, {
     baseUrl: getApiUrl(),
     baseHeaders: {
         authorization: () => getAuthToken(),
+    },
+    api: async (args: ApiFetcherArgs) => {
+        const response = (await tsRestFetchApi(args)) as any;
+
+        if (response.status === 400 && response?.body?.name === "ValidationError") {
+            throw new z.ZodError(response.body.issues);
+        }
+
+        if ((response.status < 200 || response.status > 299) && response?.body) {
+            throw response.body;
+        }
+
+        return response;
     },
 });
