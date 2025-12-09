@@ -1,11 +1,11 @@
-import { AuthenticationApi, UsersApi, type User } from "@/api/generated";
-import { defaultApiConfiguration } from "@/fetch";
 import router from "@/router";
 import authContract from "@stelan/auth-contract";
 import { initClient, tsRestFetchApi, type ApiFetcherArgs } from "@ts-rest/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import z from "zod";
+import type { User } from "../../../backend/prisma/generated/zod";
+import { apiClient } from "@/api/client";
 
 const authClient = initClient(authContract, {
     baseUrl: process.env.NODE_ENV === "development" ? "http://localhost:9090" : "https://auth.cinewhere.co.uk",
@@ -27,30 +27,33 @@ const authClient = initClient(authContract, {
 export const useUserStore = defineStore("user", () => {
     const user = ref<User | null>(null);
 
-    const authenticationApi = new AuthenticationApi(defaultApiConfiguration);
-
-    const usersApi = new UsersApi(defaultApiConfiguration);
-
     async function validateJWT() {
-        await authenticationApi.apiValidateJWTGet();
+        const jwtResponse = await apiClient.users.validateJWT();
 
-        if (!user.value) {
-            user.value = await usersApi.apiUserGet();
+        if (!user.value && jwtResponse.status === 200) {
+            const userResponse = await apiClient.users.getUser();
+
+            if (userResponse.status === 200) user.value = userResponse.body;
         }
     }
 
     async function login(email: string, password: string) {
         try {
-            const response = await authClient.postLogin({ body: { serviceName: "income_calculator", emailOrUsername: email, password } });
+            const authResponse = await authClient.postLogin({
+                body: { serviceName: "income_calculator", emailOrUsername: email, password },
+            });
 
-            if (response.status === 200) {
-                const { jwt } = response.body;
+            if (authResponse.status === 200) {
+                const { jwt } = authResponse.body;
 
                 localStorage.setItem("jwt", jwt);
 
-                user.value = await usersApi.apiUserGet();
+                const userResponse = await apiClient.users.getUser();
 
-                await router.replace({ name: "year", params: { year: new Date().getFullYear() } });
+                if (userResponse.status === 200) {
+                    user.value = userResponse.body;
+                    await router.replace({ name: "year", params: { year: new Date().getFullYear() } });
+                }
             }
         } catch (err: unknown) {
             throw err;
@@ -90,16 +93,19 @@ export const useUserStore = defineStore("user", () => {
     }
 
     async function signInWithGoogle(token: string) {
-        const response = await authClient.postGoogleSignIn({ body: { serviceName: "income_calculator", token } });
+        const authResponse = await authClient.postGoogleSignIn({ body: { serviceName: "income_calculator", token } });
 
-        if (response.status === 200) {
-            const { jwt } = response.body;
+        if (authResponse.status === 200) {
+            const { jwt } = authResponse.body;
 
             localStorage.setItem("jwt", jwt);
 
-            user.value = await usersApi.apiUserGet();
+            const userResponse = await apiClient.users.getUser();
 
-            await router.replace({ name: "year", params: { year: new Date().getFullYear() } });
+            if (userResponse.status === 200) {
+                user.value = userResponse.body;
+                await router.replace({ name: "year", params: { year: new Date().getFullYear() } });
+            }
         }
     }
 
