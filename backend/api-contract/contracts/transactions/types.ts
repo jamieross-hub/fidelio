@@ -2,32 +2,32 @@ import z from "zod";
 import { TransactionSchema } from "../../../prisma/generated/zod";
 
 export type MonthName =
-    | "january"
-    | "february"
-    | "march"
-    | "april"
-    | "may"
-    | "june"
-    | "july"
-    | "august"
-    | "september"
-    | "october"
-    | "november"
-    | "december";
+    | "January"
+    | "February"
+    | "March"
+    | "April"
+    | "May"
+    | "June"
+    | "July"
+    | "August"
+    | "September"
+    | "October"
+    | "November"
+    | "December";
 
 export const monthNames: MonthName[] = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
 ] as const;
 
 export const MonthSchema = z.object({
@@ -36,11 +36,13 @@ export const MonthSchema = z.object({
     expenses: z.number(),
     remaining: z.number(),
 });
+export type MonthSchema = z.infer<typeof MonthSchema>;
 
 export const MonthDateSchema = z.object({
     date: z.string(),
     transactions: z.array(TransactionSchema),
 });
+export type MonthDateSchema = z.infer<typeof MonthDateSchema>;
 
 export type RecurrenceTypeChoices = "day" | "week" | "month";
 export const recurrenceTypeChoices: RecurrenceTypeChoices[] = ["day", "week", "month"];
