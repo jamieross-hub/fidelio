@@ -3,7 +3,6 @@ node_modules
 .env
 .DS_Store
 .firebase
-prisma/generated
 src/emails/_tests
 dist
 prisma/generated
