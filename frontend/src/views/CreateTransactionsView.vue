@@ -17,8 +17,6 @@ import {
 import { RouterLink } from "vue-router";
 import SelectableCard from "@/components/SelectableCard.vue";
 import { useScroll, useResizeObserver, useWindowSize } from "@vueuse/core";
-import { TransactionsApi, type CreateTransactionInput } from "@/api/generated";
-import { defaultApiConfiguration } from "@/fetch";
 import { motion } from "motion-v";
 import Button from "@/components/ui/button/Button.vue";
 import Input from "@/components/ui/input/Input.vue";
@@ -30,15 +28,15 @@ import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
 import { CalendarIcon, LoaderCircle } from "lucide-vue-next";
 import type { DateValue } from "@internationalized/date";
 import { apiClient } from "@/api/client";
-import type { CreateTransactionBodySchema } from "@api-contract/contracts/transactions/types";
-
-type FirstLastDayOfMonth = "first_business" | "last_business" | "last" | "specific";
+import type {
+    CreateTransactionBodySchema,
+    FirstLastDayOfMonthChoices,
+    RecurrenceTypeChoices,
+} from "@api-contract/contracts/transactions/types";
 
 const df = new DateFormatter("en-GB", {
     dateStyle: "long",
 });
-
-const transactionApi = new TransactionsApi(defaultApiConfiguration);
 
 const { width: windowWidth } = useWindowSize();
 
@@ -91,7 +89,7 @@ const daysOfMonth = ref([
     { label: "28th", value: 28 },
 ]);
 
-const firstLastDayOfMonthChoices = ref<{ label: string; value: FirstLastDayOfMonth }[]>([
+const firstLastDayOfMonthChoices = ref<{ label: string; value: FirstLastDayOfMonthChoices }[]>([
     { label: "First business day of the month", value: "first_business" },
     { label: "Last business day of the month", value: "last_business" },
     { label: "Last day of the month", value: "last" },
@@ -104,7 +102,7 @@ const isExpense = ref<boolean | null>(null);
 
 const transactionName = ref("");
 
-const recurrenceType = ref<"day" | "week" | "month">();
+const recurrenceType = ref<RecurrenceTypeChoices>();
 
 const isRecurring = ref<boolean | null>(null);
 
@@ -116,7 +114,7 @@ const specificDayOfWeek = ref<number>();
 
 const specificDayOfMonth = ref<number>();
 
-const firstLastDayOfMonth = ref<FirstLastDayOfMonth>();
+const firstLastDayOfMonth = ref<FirstLastDayOfMonthChoices>();
 
 const startDate = ref<DateValue>();
 
@@ -211,7 +209,6 @@ async function createTransaction() {
     if (transactionsForm.value) {
         try {
             loading.value = true;
-            // await transactionApi.apiTransactionsPost({ createTransactionInput: transactionsForm.value });
             await apiClient.transactions.createTransaction({ body: transactionsForm.value });
             step.value++;
         } catch (err: any) {
