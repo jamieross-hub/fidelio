@@ -54,10 +54,10 @@ const router = server.router(contract, {
         getTransactions: async ({ req: { user } }) => {
             return { status: 200, body: await getAllTransactions(user.id) };
         },
-        getTransactionsForYear: async ({ req: { user }, params: { year } }) => {
+        getCalendarYear: async ({ req: { user }, params: { year } }) => {
             return { status: 200, body: await getYearTransactions(year, user.id) };
         },
-        getTransactionsForMonth: async ({ req: { user }, params: { year, month } }) => {
+        getCalendarMonth: async ({ req: { user }, params: { year, month } }) => {
             return { status: 200, body: await getMonthTransactions(year, monthNames.indexOf(month), user.id) };
         },
     },
