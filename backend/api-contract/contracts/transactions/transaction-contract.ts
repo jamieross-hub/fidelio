@@ -9,7 +9,7 @@ const client = initContract();
 export const transactionContract = client.router({
     getTransaction: {
         method: "GET",
-        path: "/transactions/:id([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})",
+        path: "/transactions/:id",
         summary: "Retrieve a single transaction",
         pathParams: z.object({
             id: z.uuidv4(),
@@ -61,9 +61,9 @@ export const transactionContract = client.router({
             200: z.array(TransactionSchema),
         },
     },
-    getTransactionsForYear: {
+    getCalendarYear: {
         method: "GET",
-        path: "/transactions/:year(\\d{4})",
+        path: "/calendar/:year",
         summary: "Retrieve a list of the current user's transactions for a given year",
         pathParams: z.object({
             year: z.coerce
@@ -75,9 +75,9 @@ export const transactionContract = client.router({
             200: z.array(MonthSchema),
         },
     },
-    getTransactionsForMonth: {
+    getCalendarMonth: {
         method: "GET",
-        path: "/transactions/:year/:month",
+        path: "/calendar/:year/:month",
         summary: "Retrieve a list of the current user's transactions for a given year & month",
         pathParams: z.object({
             year: z.coerce
