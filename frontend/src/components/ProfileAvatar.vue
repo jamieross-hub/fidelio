@@ -14,7 +14,7 @@ const { user } = storeToRefs(userStore);
     <DropdownMenu>
         <DropdownMenuTrigger asChild>
             <Button variant="outline" v-bind="$attrs">
-                <img :src="user?.image" class="max-h-full" />
+                <img :src="user?.image || undefined" class="max-h-full" />
                 {{ user?.username }}
                 <ChevronUp class="ml-auto" />
             </Button>
