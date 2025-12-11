@@ -6,7 +6,7 @@
     "scripts": {
         "clean": "rm -rf dist",
         "dev": "vite",
-        "build": "run-p type-check \"build-only {@}\" --",
+        "build": "cd ../backend; npx prisma generate; cd ../frontend; run-p type-check \"build-only {@}\" --",
         "preview": "vite preview",
         "build-only": "vite build",
         "type-check": "vue-tsc --build --force",

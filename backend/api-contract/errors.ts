@@ -14,12 +14,12 @@ export const enum ErrorNameEnum {
 
 // Below are the built-in/library errors.
 
-const validationError = client.type<{
+export const validationError = client.type<{
     name: ErrorNameEnum.ValidationError;
     issues: z.core.$ZodIssue[];
 }>();
 
-const prismaClientKnownRequestError = client.type<{
+export const prismaClientKnownRequestError = client.type<{
     name: ErrorNameEnum.PrismaClientKnownRequestError;
     message: string;
 }>();
@@ -40,28 +40,20 @@ export class ForbiddenError extends Error {
     }
 }
 
-const internalServerError = client.type<{
+export const internalServerError = client.type<{
     name: ErrorNameEnum.InternalServerError;
     message: string;
 }>();
 
-const unauthorisedError = client.type<{
+export const unauthorisedError = client.type<{
     name: ErrorNameEnum.UnauthorisedError;
     message: string;
 }>();
 
-const forbiddenError = client.type<{
+export const forbiddenError = client.type<{
     name: ErrorNameEnum.ForbiddenError;
     message: string;
 }>();
-
-export const commonErrorType = client.type<
-    | typeof validationError
-    | typeof prismaClientKnownRequestError
-    | typeof internalServerError
-    | typeof unauthorisedError
-    | typeof forbiddenError
->();
 
 // Custom ZodErrors. Useful for throwing custom ts-rest RequestValidationErrors
 
