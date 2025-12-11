@@ -1,5 +1,5 @@
 import { MonthName } from "@api-contract/contracts/transactions/types";
-import { Transaction } from "../prisma/generated";
+import { Transaction } from "../prisma/generated/client";
 
 export interface JWT {
     exp: Date;
