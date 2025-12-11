@@ -12,14 +12,14 @@ import { Trash } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 import { useSettingsStore } from "@/stores/settingsStore";
 import { useCurrency } from "@/composables/currency";
-import type { Transaction } from "../../../backend/prisma/generated/zod";
 import { apiClient } from "@/api/client";
+import type { TransactionPureType } from "@schemas/pure/Transaction.pure";
 
 const { settings } = storeToRefs(useSettingsStore());
 
 const { getFormattedCurrencyString } = useCurrency();
 
-const transactions = ref<Transaction[] | null>(null);
+const transactions = ref<Omit<TransactionPureType, "user">[] | null>(null);
 
 const deleteConfirmDialog = ref();
 

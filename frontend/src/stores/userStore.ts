@@ -4,8 +4,8 @@ import { initClient, tsRestFetchApi, type ApiFetcherArgs } from "@ts-rest/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import z from "zod";
-import type { User } from "../../../backend/prisma/generated/zod";
 import { apiClient } from "@/api/client";
+import type { UserPureType } from "@schemas/pure/User.pure";
 
 const authClient = initClient(authContract, {
     baseUrl: process.env.NODE_ENV === "development" ? "http://localhost:9090" : "https://auth.cinewhere.co.uk",
@@ -25,7 +25,7 @@ const authClient = initClient(authContract, {
 });
 
 export const useUserStore = defineStore("user", () => {
-    const user = ref<User | null>(null);
+    const user = ref<Omit<UserPureType, "transactions"> | null>(null);
 
     async function validateJWT() {
         const jwtResponse = await apiClient.users.validateJWT();

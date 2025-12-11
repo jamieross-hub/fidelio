@@ -32,7 +32,7 @@ import type {
     UpdateTransactionBodySchema,
 } from "@api-contract/contracts/transactions/types";
 import { apiClient } from "@/api/client";
-import type { Transaction } from "../../../backend/prisma/generated/zod";
+import type { TransactionPureType } from "@schemas/pure/Transaction.pure";
 
 const df = new DateFormatter("en-GB", { dateStyle: "long" });
 
@@ -220,7 +220,7 @@ async function getTransaction() {
         });
 
         if (response.status === 200) {
-            const transaction: Transaction = response.body;
+            const transaction: Omit<TransactionPureType, "user"> = response.body;
 
             isExpense.value = transaction.isExpense;
             transactionName.value = transaction.name;
