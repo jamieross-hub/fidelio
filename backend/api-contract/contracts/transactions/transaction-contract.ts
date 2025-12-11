@@ -1,8 +1,8 @@
-import { initContract } from "@ts-rest/core";
 import z from "zod";
-import { TransactionSchema } from "../../../prisma/generated/zod";
+import { initContract } from "@ts-rest/core";
 import { CreateTransactionBodySchema, MonthDateSchema, monthNames, MonthSchema, UpdateTransactionBodySchema } from "./types";
-import { yearsFromNow } from "../../../src/helpers/dates";
+import { yearsFromNow } from "../../utils/dates";
+import { TransactionModelSchema } from "@schemas/pure";
 
 const client = initContract();
 
@@ -15,7 +15,7 @@ export const transactionContract = client.router({
             id: z.uuidv4(),
         }),
         responses: {
-            200: TransactionSchema,
+            200: TransactionModelSchema.omit({ user: true }),
         },
     },
     createTransaction: {
@@ -24,7 +24,7 @@ export const transactionContract = client.router({
         summary: "Create a new transaction",
         body: CreateTransactionBodySchema,
         responses: {
-            200: TransactionSchema,
+            200: TransactionModelSchema.omit({ user: true }),
         },
     },
     updateTransaction: {
@@ -36,7 +36,7 @@ export const transactionContract = client.router({
         }),
         body: UpdateTransactionBodySchema,
         responses: {
-            200: TransactionSchema,
+            200: TransactionModelSchema.omit({ user: true }),
         },
     },
     deleteTransaction: {
@@ -58,7 +58,7 @@ export const transactionContract = client.router({
             isExpense: z.coerce.boolean().optional(),
         }),
         responses: {
-            200: z.array(TransactionSchema),
+            200: z.array(TransactionModelSchema.omit({ user: true })),
         },
     },
     getCalendarYear: {

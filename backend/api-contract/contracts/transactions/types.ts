@@ -1,5 +1,5 @@
 import z from "zod";
-import { TransactionSchema } from "../../../prisma/generated/zod";
+import { TransactionModelSchema } from "@schemas/pure";
 
 export type MonthName =
     | "January"
@@ -40,7 +40,7 @@ export type MonthSchema = z.infer<typeof MonthSchema>;
 
 export const MonthDateSchema = z.object({
     date: z.string(),
-    transactions: z.array(TransactionSchema),
+    transactions: z.array(TransactionModelSchema.omit({ user: true })),
 });
 export type MonthDateSchema = z.infer<typeof MonthDateSchema>;
 
@@ -50,10 +50,11 @@ export const recurrenceTypeChoices: RecurrenceTypeChoices[] = ["day", "week", "m
 export type FirstLastDayOfMonthChoices = "first_business" | "last_business" | "last" | "specific";
 export const firstLastDayOfMonthChoices: FirstLastDayOfMonthChoices[] = ["first_business", "last_business", "last", "specific"];
 
-export const CreateTransactionBodySchema = TransactionSchema.omit({
+export const CreateTransactionBodySchema = TransactionModelSchema.omit({
     id: true,
     createdAt: true,
     userId: true,
+    user: true,
 }).extend({
     amountInPence: z.number(),
     startDate: z.coerce.date().nullable().optional(),

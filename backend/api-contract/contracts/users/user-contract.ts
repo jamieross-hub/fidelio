@@ -1,6 +1,6 @@
-import { initContract } from "@ts-rest/core";
-import { UserSchema } from "../../../prisma/generated/zod";
 import z from "zod";
+import { UserModelSchema } from "@schemas/pure";
+import { initContract } from "@ts-rest/core";
 
 const client = initContract();
 
@@ -18,7 +18,7 @@ export const userContract = client.router({
         path: "/user",
         summary: "Retrieve the current user's account",
         responses: {
-            200: UserSchema,
+            200: UserModelSchema.omit({ transactions: true }),
         },
     },
 });
