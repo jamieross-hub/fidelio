@@ -38,7 +38,7 @@ export const getTransactionDatesInYear = (transaction: Transaction, months: Mont
         recurrenceRate: number;
         startDate?: Date;
         finishDate?: Date;
-        amountInPence: Decimal;
+        amountInPence: number;
         isRecurring: boolean;
     };
 
@@ -84,14 +84,14 @@ export const getTransactionDatesInYear = (transaction: Transaction, months: Mont
 
         while (currentDate <= endDate) {
             const monthIndex = currentDate.getMonth();
-            isExpense ? (months[monthIndex].expenses += amountInPence.toNumber()) : (months[monthIndex].income += amountInPence.toNumber());
+            isExpense ? (months[monthIndex].expenses += amountInPence) : (months[monthIndex].income += amountInPence);
             currentDate = fnMap[recurrenceType].add(currentDate, recurrenceRate);
         }
     } else {
         const monthIndex = transaction.startDate?.getMonth();
 
         if (monthIndex !== undefined) {
-            isExpense ? (months[monthIndex].expenses += amountInPence.toNumber()) : (months[monthIndex].income += amountInPence.toNumber());
+            isExpense ? (months[monthIndex].expenses += amountInPence) : (months[monthIndex].income += amountInPence);
         }
     }
 };
@@ -210,6 +210,8 @@ export const groupTransactionsByMonth = (transactions: Transaction[], year: numb
     });
 
     months.forEach((month) => {
+        month.income /= 100;
+        month.expenses /= 100;
         month.remaining = month.income - month.expenses;
     });
 
@@ -229,5 +231,12 @@ export const groupTransactionsByDaysInMonth = (transactions: Transaction[], year
         getTransactionDatesInMonth(transaction, daysInMonth, year, month);
     });
 
-    return daysInMonth;
+    return daysInMonth.map((day) => {
+        return {
+            ...day,
+            transactions: day.transactions.map((transaction) => {
+                return { ...transaction, amountInPence: transaction.amountInPence / 100 };
+            }),
+        };
+    });
 };

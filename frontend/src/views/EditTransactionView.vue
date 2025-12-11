@@ -173,7 +173,7 @@ const transactionsForm = computed(() => {
         const params: UpdateTransactionBodySchema = {
             name: transactionName.value,
             isExpense: isExpense.value,
-            amountInPence: amountInPence.value,
+            amountInPence: amountInPence.value * 100,
             isRecurring: isRecurring.value,
             startDate: formattedStartDate.value || null,
             finishDate: formattedFinishDate.value && isRecurring.value ? formattedFinishDate.value : null,
@@ -224,7 +224,7 @@ async function getTransaction() {
 
             isExpense.value = transaction.isExpense;
             transactionName.value = transaction.name;
-            amountInPence.value = parseFloat(String(transaction.amountInPence));
+            amountInPence.value = transaction.amountInPence / 100;
             isRecurring.value = transaction.isRecurring;
             recurrenceType.value = (transaction.recurrenceType as RecurrenceTypeChoices) ?? undefined;
             recurrenceRate.value = transaction.recurrenceRate ?? undefined;

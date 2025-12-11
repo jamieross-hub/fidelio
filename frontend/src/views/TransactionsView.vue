@@ -77,7 +77,7 @@ onMounted(() => {
                 <p class="text-xl font-medium">{{ transaction.name }}</p>
                 <div class="flex items-center gap-3">
                     <p class="text-xl mr-1">
-                        {{ getFormattedCurrencyString(parseFloat(transaction.amountInPence.toString()), settings.currency.code) }}
+                        {{ getFormattedCurrencyString(transaction.amountInPence / 100, settings.currency.code) }}
                     </p>
                     <div class="flex">
                         <Tooltip>

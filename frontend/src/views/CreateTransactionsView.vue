@@ -171,7 +171,7 @@ const transactionsForm = computed(() => {
         const params: CreateTransactionBodySchema = {
             name: transactionName.value,
             isExpense: isExpense.value,
-            amountInPence: amountInPence.value,
+            amountInPence: amountInPence.value * 100,
             isRecurring: isRecurring.value,
             startDate: formattedStartDate.value,
             finishDate: isRecurring.value ? formattedFinishDate.value : undefined,
