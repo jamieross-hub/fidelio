@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { authenticateJWT } from "./jwt/jwt";
-import { handleCustomErrors } from "./errors/middleware";
+import { errorLogger, handle500Errors, handleCustomErrors, handlePrismaErrors, handleZodValidationErrors } from "./errors/middleware";
 import { createExpressEndpoints, initServer } from "@ts-rest/express";
 import { contract } from "@api-contract";
 import {
@@ -63,9 +63,17 @@ const router = server.router(contract, {
     },
 });
 
-createExpressEndpoints(contract, router, app);
+createExpressEndpoints(contract, router, app, {
+    // Just passes on the error to the middleware stack. This is only invoked when the error is thrown by Zod inside the ts-rest router, otherwise the normal middleware flow occurs
+    requestValidationErrorHandler: (error, _request, _response, next) => next(error),
+});
 
+// error-handling middleware
+app.use(errorLogger);
+app.use(handleZodValidationErrors);
+app.use(handlePrismaErrors);
 app.use(handleCustomErrors);
+app.use(handle500Errors);
 
 app.listen(port, "0.0.0.0", () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
