@@ -9,7 +9,7 @@
         "paths": {
             "@api-contract": ["./api-contract"],
             "@api-contract/*": ["./api-contract/*"],
-            "@schemas/*": ["./prisma/generated/zod/schemas/variants/*"],
+            "@schemas/*": ["./prisma/zod/schemas/variants/*"],
             "@/*": ["./src/*"]
         },
         "resolveJsonModule": true,

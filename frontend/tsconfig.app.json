@@ -1,12 +1,6 @@
 {
     "extends": "@vue/tsconfig/tsconfig.dom.json",
-    "include": [
-        "env.d.ts",
-        "components.d.ts",
-        "src/**/*",
-        "../backend/api-contract/**/*",
-        "../backend/prisma/generated/zod/schemas/variants/**/*"
-    ],
+    "include": ["env.d.ts", "components.d.ts", "src/**/*", "../backend/api-contract/**/*", "../backend/prisma/zod/schemas/variants/**/*"],
     "exclude": ["src/**/__tests__/*"],
     "compilerOptions": {
         "composite": true,
@@ -15,7 +9,7 @@
         "paths": {
             "@api-contract": ["../backend/api-contract", "./api-contract"],
             "@api-contract/*": ["../backend/api-contract/*", "./api-contract/*"],
-            "@schemas/*": ["../backend/prisma/generated/zod/schemas/variants/*", "./schemas/*"],
+            "@schemas/*": ["../backend/prisma/zod/schemas/variants/*", "./schemas/*"],
             "@/*": ["./src/*"]
         },
         "types": ["node"]
