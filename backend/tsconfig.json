@@ -1,20 +1,22 @@
 {
     "compilerOptions": {
         /* Visit https://aka.ms/tsconfig to read more about this file */
-        "target": "es2016",
-        "module": "commonjs",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "target": "ES2023",
+        "strict": true,
+        "esModuleInterop": true,
         "paths": {
             "@api-contract": ["./api-contract"],
             "@api-contract/*": ["./api-contract/*"],
+            "@schemas/*": ["./prisma/generated/zod/schemas/variants/*"],
             "@/*": ["./src/*"]
         },
         "resolveJsonModule": true,
         "allowJs": true,
         "checkJs": true,
         "outDir": "./dist",
-        "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-        "strict": true,
         "strictNullChecks": true,
         "skipLibCheck": true
     },
