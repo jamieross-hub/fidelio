@@ -6,7 +6,7 @@
     "scripts": {
         "clean": "rm -rf dist",
         "dev": "vite",
-        "build": "cp -r ../backend/api-contract ./api-contract && mkdir ./schemas/variants && cp -r ../backend/prisma/zod/schemas/variants ./schemas/variants && ls -R ./api-contract ./schemas/variants && run-p type-check \"build-only {@}\" --",
+        "build": "cp -r ../backend/api-contract ./api-contract && mkdir -p ./schemas/variants && cp -r ../backend/prisma/zod/schemas/variants ./schemas/variants && ls -R ./api-contract ./schemas/variants && run-p type-check \"build-only {@}\" --",
         "preview": "vite preview",
         "build-only": "vite build",
         "type-check": "vue-tsc --build --force",
