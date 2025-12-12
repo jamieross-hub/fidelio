@@ -54,8 +54,8 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            "@api-contract": process.env.API_CONTRACT_PATH || fileURLToPath(new URL("../backend/api-contract", import.meta.url)),
-            "@schemas": process.env.SCHEMA_PATH || fileURLToPath(new URL("../backend/prisma/zod/schemas/variants", import.meta.url)),
+            "@api-contract": fileURLToPath(new URL("../backend/api-contract", import.meta.url)),
+            "@schemas": fileURLToPath(new URL("../backend/prisma/zod/schemas/variants", import.meta.url)),
             "@": fileURLToPath(new URL("./src", import.meta.url)),
         },
     },
