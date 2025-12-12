@@ -6,7 +6,7 @@
     "scripts": {
         "clean": "rm -rf dist",
         "dev": "vite",
-        "build": "run-p type-check \"build-only {@}\" --",
+        "build": "cp -r ../backend/api-contract ./api-contract && cp -r ../backend/prisma/zod/schemas/variants ./schemas && ls -R ./api-contract ./schemas && run-p type-check \"build-only {@}\" --",
         "preview": "vite preview",
         "build-only": "vite build",
         "type-check": "vue-tsc --build --force",

@@ -11,6 +11,9 @@ import path from "node:path";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 const dirname = typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
+const contractsPath = fileURLToPath(new URL(process.env.API_CONTRACT_PATH || "../backend/api-contract", import.meta.url));
+const schemaPath = fileURLToPath(new URL(process.env.SCHEMA_PATH || "../backend/prisma/zod/schemas/variants", import.meta.url));
+
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
     plugins: [
@@ -54,8 +57,8 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            "@api-contract": fileURLToPath(new URL("../backend/api-contract", import.meta.url)),
-            "@schemas": fileURLToPath(new URL("../backend/prisma/zod/schemas/variants", import.meta.url)),
+            "@api-contract": contractsPath,
+            "@schemas": schemaPath,
             "@": fileURLToPath(new URL("./src", import.meta.url)),
         },
     },
