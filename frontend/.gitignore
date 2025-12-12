@@ -32,3 +32,6 @@ coverage
 google-secret.json
 *storybook.log
 storybook-static
+
+api-contract
+schemas

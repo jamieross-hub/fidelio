@@ -9,8 +9,8 @@ RUN npm ci
 # Copy source
 COPY . .
 
-# Run your build
-RUN rm -rf dist && npx prisma generate && npx tsc && cp -R public dist/public
+# Build
+RUN rm -rf dist && npx prisma generate && npx tsc
 
 # Stage 2: production
 FROM node:22-alpine
@@ -26,6 +26,6 @@ RUN npm ci --omit=dev
 # Copy built files from build stage
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=build /app/api-contract ./api-contract
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/index.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/server.js"]

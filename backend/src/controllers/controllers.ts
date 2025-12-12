@@ -8,15 +8,14 @@ import {
     getYearTransactions,
     updateSingleTransaction,
 } from "../models/models";
-import { Transaction, User } from "@prisma/client";
-import { GetTransactionMonthParams, GetTransactionYearParams } from "../schema/transaction.schema";
 import { validMonthStrings } from "../constants";
+import { User } from "../../prisma/generated";
 
 export function validateJWT(_request: Request, response: Response) {
     response.status(200).send({ msg: "Your JWT is valid" });
 }
 
-export async function getUserData(request: Request & { user?: any }, response: Response, next: NextFunction) {
+export async function getUserData(request: Request, response: Response, next: NextFunction) {
     try {
         response.status(200).send(request.user);
     } catch (err: any) {
