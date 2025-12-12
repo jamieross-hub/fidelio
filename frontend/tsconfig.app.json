@@ -1,6 +1,6 @@
 {
     "extends": "@vue/tsconfig/tsconfig.dom.json",
-    "include": ["env.d.ts", "components.d.ts", "src/**/*", "**/api-contract/**/*", "**/variants/**/*"],
+    "include": ["env.d.ts", "components.d.ts", "src/**/*", "**/api-contract/**/*", "**/schemas/variants/**/*"],
     "exclude": ["src/**/__tests__/*"],
     "compilerOptions": {
         "composite": true,
