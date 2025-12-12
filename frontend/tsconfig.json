@@ -13,7 +13,7 @@
         "paths": {
             "@api-contract": ["./api-contract", "../backend/api-contract"],
             "@api-contract/*": ["./api-contract/*", "../backend/api-contract/*"],
-            "@schemas/*": ["./schemas/*", "../backend/prisma/zod/schemas/variants/*"],
+            "@schemas/*": ["./schemas/variants/*", "../backend/prisma/zod/schemas/variants/*"],
             "@/*": ["./src/*"]
         },
         "types": ["node"]
