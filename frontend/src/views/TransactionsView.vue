@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { type Transaction, TransactionsApi } from "@/api/generated";
-import { defaultApiConfiguration } from "@/fetch";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { onMounted, ref } from "vue";
 import { mdiCardsOutline, mdiPencilOutline } from "@mdi/js";
@@ -14,14 +12,14 @@ import { Trash } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 import { useSettingsStore } from "@/stores/settingsStore";
 import { useCurrency } from "@/composables/currency";
+import { apiClient } from "@/api/client";
+import type { TransactionPureType } from "@schemas/pure/Transaction.pure";
 
 const { settings } = storeToRefs(useSettingsStore());
 
 const { getFormattedCurrencyString } = useCurrency();
 
-const transactionsApi = new TransactionsApi(defaultApiConfiguration);
-
-const transactions = ref<Transaction[] | null>(null);
+const transactions = ref<Omit<TransactionPureType, "user">[] | null>(null);
 
 const deleteConfirmDialog = ref();
 
@@ -29,7 +27,11 @@ const selectedTransactionId = ref<string | null>();
 
 async function getTransactions() {
     try {
-        transactions.value = await transactionsApi.apiTransactionsGet();
+        const response = await apiClient.transactions.getTransactions();
+
+        if (response.status === 200) {
+            transactions.value = response.body;
+        }
     } catch (err: any) {
         console.error(err);
     }
@@ -38,7 +40,7 @@ async function getTransactions() {
 async function deleteTransaction() {
     if (selectedTransactionId.value) {
         try {
-            await transactionsApi.apiTransactionsIdDelete({ id: selectedTransactionId.value });
+            await apiClient.transactions.deleteTransaction({ params: { id: selectedTransactionId.value } });
 
             if (transactions.value) {
                 const indexToRemove = transactions.value.findIndex((el) => el.id === selectedTransactionId.value);
@@ -75,7 +77,7 @@ onMounted(() => {
                 <p class="text-xl font-medium">{{ transaction.name }}</p>
                 <div class="flex items-center gap-3">
                     <p class="text-xl mr-1">
-                        {{ getFormattedCurrencyString(parseFloat(transaction.amountInPence), settings.currency.code) }}
+                        {{ getFormattedCurrencyString(transaction.amountInPence / 100, settings.currency.code) }}
                     </p>
                     <div class="flex">
                         <Tooltip>

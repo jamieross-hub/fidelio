@@ -15,7 +15,7 @@ services:
         restart: unless-stopped
 
     backend:
-        image: ghcr.io/${GITHUB_REPO}/backend:latest
+        image: ghcr.io/${GITHUB_REPO}/backend:${IMAGE_TAG}
         container_name: ${API_CONTAINER_NAME}
         depends_on:
             - db

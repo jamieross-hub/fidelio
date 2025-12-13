@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ApiTransactionsYearMonthGetMonthEnum, TransactionsApi, type GetTransactionMonthResponseInner } from "@/api/generated";
+import { apiClient } from "@/api/client";
 import { useCurrency } from "@/composables/currency";
-import { defaultApiConfiguration } from "@/fetch";
 import { useSettingsStore } from "@/stores/settingsStore";
+import type { MonthDateSchema, MonthName } from "@api-contract/contracts/transactions/types";
 import { storeToRefs } from "pinia";
-import { computed, onMounted, ref } from "vue";
+import { capitalize, computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -14,11 +14,9 @@ const { getFormattedCurrencyString } = useCurrency();
 
 const year = ref<number>(Array.isArray(route.params.year) ? parseInt(route.params.year[0]) : parseInt(route.params.year));
 
-const month = ref<string>(Array.isArray(route.params.month) ? route.params.month[0].toLowerCase() : route.params.month.toLowerCase());
+const month = ref<string>(Array.isArray(route.params.month) ? capitalize(route.params.month[0]) : capitalize(route.params.month));
 
-const transactionApi = new TransactionsApi(defaultApiConfiguration);
-
-interface CollapsibleDate extends GetTransactionMonthResponseInner {
+interface CollapsibleDate extends MonthDateSchema {
     collapsed: boolean;
 }
 
@@ -34,15 +32,22 @@ const formattedMonthName = computed(() => {
 
 async function getTransactions() {
     try {
-        const results = (await transactionApi.apiTransactionsYearMonthGet({
-            year: year.value,
-            month: month.value as ApiTransactionsYearMonthGetMonthEnum,
-        })) as CollapsibleDate[];
-
-        dates.value = results.map((el) => {
-            el.collapsed = false;
-            return el;
+        const response = await apiClient.transactions.getCalendarMonth({
+            params: {
+                year: year.value,
+                month: month.value as MonthName,
+            },
         });
+
+        if (response.status === 200) {
+            const d: CollapsibleDate[] = [];
+
+            response.body.forEach((el) => {
+                d.push({ collapsed: false, ...el });
+            });
+
+            dates.value = d;
+        }
     } catch (err: any) {
         console.error(err);
     }
@@ -66,7 +71,7 @@ onMounted(() => {
                 >
                     <p>{{ transaction.name }}</p>
                     <p class="font-medium" :class="{ 'text-state-danger-500': transaction.isExpense }">
-                        {{ getFormattedCurrencyString(parseFloat(transaction.amountInPence), settings.currency.code) }}
+                        {{ getFormattedCurrencyString(parseFloat(transaction.amountInPence.toString()), settings.currency.code) }}
                     </p>
                 </div>
             </div>

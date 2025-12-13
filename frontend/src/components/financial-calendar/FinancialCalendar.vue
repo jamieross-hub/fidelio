@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref, defineProps, defineEmits, watch } from "vue";
-import { useRoute } from "vue-router";
-import router from "@/router";
-import { TransactionsApi, type GetTransactionYearResponseInner } from "@/api/generated";
-import { defaultApiConfiguration } from "@/fetch";
+import { onMounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { RouterLink } from "vue-router";
 import debounce from "lodash.debounce";
+import { apiClient } from "@/api/client";
 
 interface Props {
     updateTrigger: boolean;
@@ -17,11 +15,11 @@ interface Emits {
 
 const route = useRoute();
 
+const router = useRouter();
+
 const props = defineProps<Props>();
 
 const emit = defineEmits<Emits>();
-
-const transactionsApi = new TransactionsApi(defaultApiConfiguration);
 
 const year = ref<number>(Array.isArray(route.params.year) ? parseInt(route.params.year[0]) : parseInt(route.params.year));
 
@@ -105,8 +103,11 @@ const months = ref<{ monthName: string; income: number | null; expenses: number 
 const getYearData = debounce(async () => {
     try {
         months.value = nullMonths;
-        const response = await transactionsApi.apiTransactionsYearGet({ year: year.value });
-        months.value = response;
+        const response = await apiClient.transactions.getCalendarYear({ params: { year: year.value } });
+
+        if (response.status === 200) {
+            months.value = response.body;
+        }
     } catch (err: any) {
         console.error(err);
     }

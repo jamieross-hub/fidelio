@@ -16,8 +16,6 @@ import {
 import { RouterLink, useRoute, useRouter } from "vue-router";
 import SelectableCard from "@/components/SelectableCard.vue";
 import { useScroll, useResizeObserver, useWindowSize } from "@vueuse/core";
-import { TransactionsApi, type Transaction, type UpdateTransactionInput } from "@/api/generated";
-import { defaultApiConfiguration } from "@/fetch";
 import { motion } from "motion-v";
 import Button from "@/components/ui/button/Button.vue";
 import Input from "@/components/ui/input/Input.vue";
@@ -28,16 +26,19 @@ import { cn } from "@/lib/utils";
 import { DateFormatter, fromDate, getLocalTimeZone } from "@internationalized/date";
 import { CalendarIcon, LoaderCircle } from "lucide-vue-next";
 import type { DateValue } from "@internationalized/date";
-
-type FirstLastDayOfMonth = "first_business" | "last_business" | "last" | "specific";
+import type {
+    FirstLastDayOfMonthChoices,
+    RecurrenceTypeChoices,
+    UpdateTransactionBodySchema,
+} from "@api-contract/contracts/transactions/types";
+import { apiClient } from "@/api/client";
+import type { TransactionPureType } from "@schemas/pure/Transaction.pure";
 
 const df = new DateFormatter("en-GB", { dateStyle: "long" });
 
 const router = useRouter();
 
 const route = useRoute();
-
-const transactionApi = new TransactionsApi(defaultApiConfiguration);
 
 const { width: windowWidth } = useWindowSize();
 
@@ -90,7 +91,7 @@ const daysOfMonth = ref([
     { label: "28th", value: 28 },
 ]);
 
-const firstLastDayOfMonthChoices = ref<{ label: string; value: FirstLastDayOfMonth }[]>([
+const firstLastDayOfMonthChoices = ref<{ label: string; value: FirstLastDayOfMonthChoices }[]>([
     { label: "First business day of the month", value: "first_business" },
     { label: "Last business day of the month", value: "last_business" },
     { label: "Last day of the month", value: "last" },
@@ -105,7 +106,7 @@ const transactionName = ref("");
 
 const isRecurring = ref<boolean | null>(null);
 
-const recurrenceType = ref<"day" | "week" | "month">();
+const recurrenceType = ref<RecurrenceTypeChoices>();
 
 const recurrenceRate = ref<number>();
 
@@ -115,7 +116,7 @@ const specificDayOfWeek = ref<number>();
 
 const specificDayOfMonth = ref<number>();
 
-const firstLastDayOfMonth = ref<FirstLastDayOfMonth>();
+const firstLastDayOfMonth = ref<FirstLastDayOfMonthChoices>();
 
 const startDate = ref<DateValue>();
 
@@ -169,10 +170,10 @@ const exitLink = computed(() => {
 
 const transactionsForm = computed(() => {
     if (isExpense.value !== null && amountInPence.value !== undefined && isRecurring.value !== null) {
-        const params: UpdateTransactionInput = {
+        const params: UpdateTransactionBodySchema = {
             name: transactionName.value,
             isExpense: isExpense.value,
-            amountInPence: amountInPence.value,
+            amountInPence: amountInPence.value * 100,
             isRecurring: isRecurring.value,
             startDate: formattedStartDate.value || null,
             finishDate: formattedFinishDate.value && isRecurring.value ? formattedFinishDate.value : null,
@@ -195,9 +196,10 @@ async function updateTransaction() {
     if (transactionsForm.value) {
         try {
             loading.value = true;
-            await transactionApi.apiTransactionsIdPut({
-                id: route.params.transaction as string,
-                updateTransactionInput: transactionsForm.value,
+
+            await apiClient.transactions.updateTransaction({
+                body: transactionsForm.value,
+                params: { id: route.params.transaction as string },
             });
 
             router.push(exitLink.value);
@@ -213,19 +215,25 @@ async function getTransaction() {
     const id = route.params.transaction as string;
 
     try {
-        const transaction: Transaction = await transactionApi.apiTransactionsIdGet({ id });
+        const response = await apiClient.transactions.getTransaction({
+            params: { id },
+        });
 
-        isExpense.value = transaction.isExpense;
-        transactionName.value = transaction.name;
-        amountInPence.value = parseFloat(transaction.amountInPence);
-        isRecurring.value = transaction.isRecurring;
-        recurrenceType.value = transaction.recurrenceType ?? undefined;
-        recurrenceRate.value = transaction.recurrenceRate ?? undefined;
-        specificDayOfWeek.value = transaction.specificDayOfWeek ?? undefined;
-        specificDayOfMonth.value = transaction.specificDayOfMonth ?? undefined;
-        firstLastDayOfMonth.value = transaction.firstLastDayOfMonth ?? undefined;
-        startDate.value = transaction.startDate ? fromDate(transaction.startDate, getLocalTimeZone()) : undefined;
-        finishDate.value = transaction.finishDate ? fromDate(transaction.finishDate, getLocalTimeZone()) : undefined;
+        if (response.status === 200) {
+            const transaction: Omit<TransactionPureType, "user"> = response.body;
+
+            isExpense.value = transaction.isExpense;
+            transactionName.value = transaction.name;
+            amountInPence.value = transaction.amountInPence / 100;
+            isRecurring.value = transaction.isRecurring;
+            recurrenceType.value = (transaction.recurrenceType as RecurrenceTypeChoices) ?? undefined;
+            recurrenceRate.value = transaction.recurrenceRate ?? undefined;
+            specificDayOfWeek.value = transaction.specificDayOfWeek ?? undefined;
+            specificDayOfMonth.value = transaction.specificDayOfMonth ?? undefined;
+            firstLastDayOfMonth.value = (transaction.firstLastDayOfMonth as FirstLastDayOfMonthChoices) ?? undefined;
+            startDate.value = transaction.startDate ? fromDate(transaction.startDate, getLocalTimeZone()) : undefined;
+            finishDate.value = transaction.finishDate ? fromDate(transaction.finishDate, getLocalTimeZone()) : undefined;
+        }
     } catch (err: unknown) {
         console.error(err);
     }
