@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "generatorVersion": "1.0.0",
-  "generatedAt": "2025-12-11T22:27:07.662Z",
+  "generatedAt": "2025-12-13T01:45:43.811Z",
   "outputPath": "/Users/stelioskakoliris/Desktop/coding/projects/fidelio/backend/prisma/zod",
   "files": [
     "schemas/enums/TransactionIsolationLevel.schema.ts",
