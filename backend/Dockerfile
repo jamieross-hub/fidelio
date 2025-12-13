@@ -2,6 +2,8 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 
+ARG DATABASE_URL
+
 # Install dependencies
 COPY package*.json ./
 RUN npm ci
@@ -10,7 +12,7 @@ RUN npm ci
 COPY . .
 
 # Build | Uses a dummy database URL as Prisma now requires one set at build time to generate types
-RUN rm -rf dist && DATABASE_URL="postgresql://user:pass@localhost:5432/db" npx prisma generate && npx tsc
+RUN rm -rf dist && DATABASE_URL=$DATABASE_URL npx prisma generate && npx tsc
 
 # Stage 2: production
 FROM node:22-alpine
