@@ -34,8 +34,6 @@ jobs:
                   context: ./backend
                   push: true
                   tags: ghcr.io/${{ github.repository }}/backend:latest
-                  build-args: |
-                      DATABASE_URL=${{ secrets.ENV_DATABASE_URL }}
 
             - name: Copy docker-compose.yml to VPS
               uses: appleboy/scp-action@v1.0.0
@@ -104,8 +102,6 @@ jobs:
                   context: ./backend
                   push: true
                   tags: ghcr.io/${{ github.repository }}/backend:staging
-                  build-args: |
-                      DATABASE_URL=${{ secrets.ENV_DATABASE_URL }}
 
             - name: Copy docker-compose.yml to VPS
               uses: appleboy/scp-action@v1.0.0
