@@ -6,3 +6,4 @@ node_modules
 src/emails/_tests
 dist
 prisma/generated
+prisma/zod/.prisma-zod-generator-manifest.json
