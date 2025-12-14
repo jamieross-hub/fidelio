@@ -12,7 +12,7 @@ import { Trash } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 import { useSettingsStore } from "@/stores/settingsStore";
 import { useCurrency } from "@/composables/currency";
-import { apiClient } from "@/api/client";
+import { apiClient } from "@/api";
 import type { TransactionPureType } from "@schemas/pure/Transaction.pure";
 
 const { settings } = storeToRefs(useSettingsStore());

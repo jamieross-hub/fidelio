@@ -31,7 +31,7 @@ import type {
     RecurrenceTypeChoices,
     UpdateTransactionBodySchema,
 } from "@api-contract/contracts/transactions/types";
-import { apiClient } from "@/api/client";
+import { apiClient } from "@/api";
 import type { TransactionPureType } from "@schemas/pure/Transaction.pure";
 
 const df = new DateFormatter("en-GB", { dateStyle: "long" });

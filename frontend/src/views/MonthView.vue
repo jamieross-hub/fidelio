@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { apiClient } from "@/api/client";
+import { apiClient } from "@/api";
 import { useCurrency } from "@/composables/currency";
 import { useSettingsStore } from "@/stores/settingsStore";
 import type { MonthDateSchema, MonthName } from "@api-contract/contracts/transactions/types";

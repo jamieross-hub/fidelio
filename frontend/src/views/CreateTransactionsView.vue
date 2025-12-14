@@ -27,7 +27,7 @@ import { cn } from "@/lib/utils";
 import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
 import { CalendarIcon, LoaderCircle } from "lucide-vue-next";
 import type { DateValue } from "@internationalized/date";
-import { apiClient } from "@/api/client";
+import { apiClient } from "@/api";
 import type {
     CreateTransactionBodySchema,
     FirstLastDayOfMonthChoices,

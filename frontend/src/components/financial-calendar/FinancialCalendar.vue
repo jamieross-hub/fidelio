@@ -3,7 +3,7 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { RouterLink } from "vue-router";
 import debounce from "lodash.debounce";
-import { apiClient } from "@/api/client";
+import { apiClient } from "@/api";
 
 interface Props {
     updateTrigger: boolean;
