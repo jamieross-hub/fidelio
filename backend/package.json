@@ -23,15 +23,15 @@
         "prisma": "^7.1.0",
         "ts-node": "^10.9.2",
         "tsc-alias": "^1.8.16",
-        "typescript": "^5.9.3"
+        "typescript": "^5.9.3",
+        "@types/cors": "^2.8.17",
+        "@types/jsonwebtoken": "^9.0.7"
     },
     "dependencies": {
         "@prisma/adapter-pg": "^7.1.0",
         "@prisma/client": "^7.1.0",
         "@ts-rest/core": "^3.53.0-rc.1",
         "@ts-rest/express": "^3.53.0-rc.1",
-        "@types/cors": "^2.8.17",
-        "@types/jsonwebtoken": "^9.0.7",
         "cors": "^2.8.5",
         "date-fns": "^4.1.0",
         "dotenv": "^17.2.3",
