@@ -1,7 +1,7 @@
 import type { FirstLastDayOfMonthChoices, RecurrenceTypeChoices, MonthName } from "./types";
 
 // All possible error names must come from this enum first. This is the single source of truth.
-export const ErrorNameEnum = {
+export const ERROR_NAMES = {
     ValidationError: "ValidationError",
     PrismaClientKnownRequestError: "PrismaClientKnownRequestError",
     InternalServerError: "InternalServerError",
@@ -9,7 +9,7 @@ export const ErrorNameEnum = {
     ForbiddenError: "ForbiddenError",
 } as const;
 
-export const monthNames: MonthName[] = [
+export const MONTH_NAMES: MonthName[] = [
     "January",
     "February",
     "March",
@@ -24,6 +24,6 @@ export const monthNames: MonthName[] = [
     "December",
 ] as const;
 
-export const recurrenceTypeChoices: RecurrenceTypeChoices[] = ["day", "week", "month"];
+export const RECURRENCE_TYPE_CHOICES: RecurrenceTypeChoices[] = ["day", "week", "month"];
 
-export const firstLastDayOfMonthChoices: FirstLastDayOfMonthChoices[] = ["first_business", "last_business", "last", "specific"];
+export const FIRST_LAST_DAY_OF_MONTH_CHOICES: FirstLastDayOfMonthChoices[] = ["first_business", "last_business", "last", "specific"];

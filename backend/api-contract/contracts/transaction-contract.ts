@@ -1,7 +1,7 @@
 import z from "zod";
 import { initContract } from "@ts-rest/core";
 import { TransactionModelSchema } from "@schemas/pure";
-import { monthNames } from "../constants";
+import { MONTH_NAMES } from "../constants";
 import { CreateTransactionBodySchema, MonthDateSchema, MonthSchema, UpdateTransactionBodySchema } from "../schemas";
 import { yearsFromNow } from "../utils";
 
@@ -85,7 +85,7 @@ export const transactionContract = contract.router({
                 .number()
                 .min(1900, { error: "Year must be less than 1900" })
                 .max(yearsFromNow(1000), { error: `Year must not be greater than ${yearsFromNow(1000)}` }),
-            month: z.enum(monthNames, { error: `That is not a valid month, must be one of: [${monthNames.join(", ")}]` }),
+            month: z.enum(MONTH_NAMES, { error: `That is not a valid month, must be one of: [${MONTH_NAMES.join(", ")}]` }),
         }),
         responses: {
             200: z.array(MonthDateSchema),
