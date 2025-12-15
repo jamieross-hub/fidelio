@@ -11,9 +11,8 @@ import {
     addBusinessDays,
     subBusinessDays,
 } from "date-fns";
-import { MonthDate, MonthSerializer } from "../../@types/types";
 import { Transaction } from "../../prisma/generated/client";
-import { Decimal } from "@prisma/client/runtime/client";
+import type { MonthDateSchemaType, MonthSchemaType } from "@api-contract";
 
 // Function to add the ordinal suffix
 export function getOrdinalSuffix(day: number): "th" | "st" | "nd" | "rd" {
@@ -31,7 +30,7 @@ export function getOrdinalSuffix(day: number): "th" | "st" | "nd" | "rd" {
 }
 
 // Function to get transaction dates for the year and populate months
-export const getTransactionDatesInYear = (transaction: Transaction, months: MonthSerializer[], year: number): void => {
+export const getTransactionDatesInYear = (transaction: Transaction, months: MonthSchemaType[], year: number): void => {
     const { isExpense, recurrenceType, recurrenceRate, startDate, finishDate, amountInPence, isRecurring } = transaction as {
         isExpense: boolean;
         recurrenceType: "day" | "week" | "month";
@@ -96,7 +95,12 @@ export const getTransactionDatesInYear = (transaction: Transaction, months: Mont
     }
 };
 
-export const getTransactionDatesInMonth = (transaction: Transaction, daysInMonth: MonthDate[], year: number, month: number): void => {
+export const getTransactionDatesInMonth = (
+    transaction: Transaction,
+    daysInMonth: MonthDateSchemaType[],
+    year: number,
+    month: number
+): void => {
     const {
         recurrenceType,
         recurrenceRate,
@@ -189,8 +193,8 @@ export const getTransactionDatesInMonth = (transaction: Transaction, daysInMonth
     }
 };
 
-export const groupTransactionsByMonth = (transactions: Transaction[], year: number): MonthSerializer[] => {
-    const months: MonthSerializer[] = [
+export const groupTransactionsByMonth = (transactions: Transaction[], year: number): MonthSchemaType[] => {
+    const months: MonthSchemaType[] = [
         { monthName: "January", income: 0, expenses: 0, remaining: 0 },
         { monthName: "February", income: 0, expenses: 0, remaining: 0 },
         { monthName: "March", income: 0, expenses: 0, remaining: 0 },
@@ -218,8 +222,8 @@ export const groupTransactionsByMonth = (transactions: Transaction[], year: numb
     return months;
 };
 
-export const groupTransactionsByDaysInMonth = (transactions: Transaction[], year: number, month: number): MonthDate[] => {
-    const daysInMonth: MonthDate[] = [];
+export const groupTransactionsByDaysInMonth = (transactions: Transaction[], year: number, month: number): MonthDateSchemaType[] => {
+    const daysInMonth: MonthDateSchemaType[] = [];
 
     const lastDay = new Date(year, month + 1, 0).getDate();
 
