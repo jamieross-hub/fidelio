@@ -4,6 +4,7 @@ import cors from "cors";
 import { authenticateJWT } from "@/jwt/jwt";
 import { errorLogger, handle500Errors, handleCustomErrors, handlePrismaErrors, handleZodValidationErrors } from "@/errors/middleware";
 import { createExpressEndpoints, initServer } from "@ts-rest/express";
+import { apiContract, MONTH_NAMES } from "@api-contract";
 import {
     createNewTransaction,
     deleteSingleTransaction,
@@ -12,8 +13,8 @@ import {
     getSingleTransaction,
     getYearTransactions,
     updateSingleTransaction,
-} from "./models/models";
-import { apiContract, MONTH_NAMES } from "@api-contract";
+} from "./features/transactions";
+import { ServerInferRequest } from "@ts-rest/core";
 
 dotenv.config();
 

@@ -1,23 +1,7 @@
 import { groupTransactionsByDaysInMonth, groupTransactionsByMonth } from "../utils/utils";
 import { prisma } from "@/lib/prisma";
-import type { Transaction, User } from "../../prisma/generated/client";
+import type { Transaction } from "../../prisma/generated/client";
 import type { CreateTransactionBodySchemaType, MonthSchemaType, UpdateTransactionBodySchemaType } from "@api-contract";
-
-export async function createUser(data: { authId: string; username: string; email: string; image: string }): Promise<User> {
-    try {
-        return await prisma.user.create({ data });
-    } catch (err) {
-        throw err;
-    }
-}
-
-export async function getUser(authId: string): Promise<User | null> {
-    try {
-        return await prisma.user.findUnique({ where: { authId } });
-    } catch (err: any) {
-        throw err;
-    }
-}
 
 export async function getYearTransactions(year: number, userId: string): Promise<MonthSchemaType[]> {
     try {
