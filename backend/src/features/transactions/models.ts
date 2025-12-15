@@ -1,6 +1,6 @@
-import { groupTransactionsByDaysInMonth, groupTransactionsByMonth } from "../utils/utils";
+import { groupTransactionsByDaysInMonth, groupTransactionsByMonth } from "../../utils/utils";
 import { prisma } from "@/lib/prisma";
-import type { Transaction } from "../../prisma/generated/client";
+import type { Transaction } from "../../../prisma/generated/client";
 import type { CreateTransactionBodySchemaType, MonthSchemaType, UpdateTransactionBodySchemaType } from "@api-contract";
 
 export async function getYearTransactions(year: number, userId: string): Promise<MonthSchemaType[]> {
