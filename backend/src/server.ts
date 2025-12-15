@@ -14,7 +14,6 @@ import {
     getYearTransactions,
     updateSingleTransaction,
 } from "./features/transactions";
-import { ServerInferRequest } from "@ts-rest/core";
 
 dotenv.config();
 
