@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
-import { UnauthorisedError } from "../errors/errors";
-import { getUser, createUser } from "../models/models";
 import type { Request, Response, NextFunction } from "express";
 import { defaultUserImage } from "../lib/firebase/storage";
 import { EmailSenders, sendEmail } from "../emails";
 import WelcomeEmail from "../emails/templates/onboarding/Welcome";
+import { UnauthorisedError } from "@api-contract";
+import { createUser, getUser } from "../features/users";
 
 export function authenticateJWT(request: Request, _response: Response, next: NextFunction): void {
     const token = request.headers.authorization?.split(" ")[1];

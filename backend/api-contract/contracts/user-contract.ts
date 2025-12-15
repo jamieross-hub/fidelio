@@ -1,10 +1,10 @@
-import z from "zod";
 import { UserModelSchema } from "@schemas/pure";
 import { initContract } from "@ts-rest/core";
+import z from "zod";
 
-const client = initContract();
+const contract = initContract();
 
-export const userContract = client.router({
+export const userContract = contract.router({
     validateJWT: {
         method: "GET",
         path: "/validateJWT",

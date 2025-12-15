@@ -4,7 +4,7 @@ import cors from "cors";
 import { authenticateJWT } from "@/jwt/jwt";
 import { errorLogger, handle500Errors, handleCustomErrors, handlePrismaErrors, handleZodValidationErrors } from "@/errors/middleware";
 import { createExpressEndpoints, initServer } from "@ts-rest/express";
-import { contract } from "@api-contract";
+import { apiContract, MONTH_NAMES } from "@api-contract";
 import {
     createNewTransaction,
     deleteSingleTransaction,
@@ -13,8 +13,7 @@ import {
     getSingleTransaction,
     getYearTransactions,
     updateSingleTransaction,
-} from "./models/models";
-import { monthNames } from "@api-contract/contracts/transactions/types";
+} from "./features/transactions";
 
 dotenv.config();
 
@@ -27,7 +26,7 @@ app.use(authenticateJWT);
 
 const server = initServer();
 
-const router = server.router(contract, {
+const router = server.router(apiContract, {
     users: {
         validateJWT: async () => {
             return { status: 200, body: { msg: "Your JWT is valid" } };
@@ -58,12 +57,12 @@ const router = server.router(contract, {
             return { status: 200, body: await getYearTransactions(year, user.id) };
         },
         getCalendarMonth: async ({ req: { user }, params: { year, month } }) => {
-            return { status: 200, body: await getMonthTransactions(year, monthNames.indexOf(month), user.id) };
+            return { status: 200, body: await getMonthTransactions(year, MONTH_NAMES.indexOf(month), user.id) };
         },
     },
 });
 
-createExpressEndpoints(contract, router, app, {
+createExpressEndpoints(apiContract, router, app, {
     // Just passes on the error to the middleware stack. This is only invoked when the error is thrown by Zod inside the ts-rest router, otherwise the normal middleware flow occurs
     requestValidationErrorHandler: (error, _request, _response, next) => next(error),
 });

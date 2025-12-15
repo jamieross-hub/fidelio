@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { apiClient } from "@/api/client";
+import { apiClient } from "@/api";
 import { useCurrency } from "@/composables/currency";
 import { useSettingsStore } from "@/stores/settingsStore";
-import type { MonthDateSchema, MonthName } from "@api-contract/contracts/transactions/types";
 import { storeToRefs } from "pinia";
 import { capitalize, computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import type { MonthDateSchemaType, MonthName } from "@api-contract";
 
 const route = useRoute();
 
@@ -16,7 +16,7 @@ const year = ref<number>(Array.isArray(route.params.year) ? parseInt(route.param
 
 const month = ref<string>(Array.isArray(route.params.month) ? capitalize(route.params.month[0]) : capitalize(route.params.month));
 
-interface CollapsibleDate extends MonthDateSchema {
+interface CollapsibleDate extends MonthDateSchemaType {
     collapsed: boolean;
 }
 

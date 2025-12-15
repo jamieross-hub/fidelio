@@ -1,4 +1,6 @@
-import { contract } from "@api-contract";
+import router from "@/router";
+// @ts-ignore the import works fine but ts is throwing an error saying that @api-contract is not in the tsconfig include pattern (which it is).
+import { apiContract, ERROR_NAMES } from "@api-contract";
 import { initClient, tsRestFetchApi, type ApiFetcherArgs } from "@ts-rest/core";
 import z from "zod";
 
@@ -23,7 +25,7 @@ export function getApiUrl() {
     }
 }
 
-export const apiClient = initClient(contract, {
+export const apiClient = initClient(apiContract, {
     baseUrl: getApiUrl(),
     baseHeaders: {
         authorization: () => getAuthToken(),
@@ -31,7 +33,12 @@ export const apiClient = initClient(contract, {
     api: async (args: ApiFetcherArgs) => {
         const response = (await tsRestFetchApi(args)) as any;
 
-        if (response.status === 400 && response?.body?.name === "ValidationError") {
+        if (response.status === 401 && response?.body?.name === ERROR_NAMES.UnauthorisedError) {
+            await router.replace({ name: "login" });
+            return;
+        }
+
+        if (response.status === 400 && response?.body?.name === ERROR_NAMES.ValidationError) {
             throw new z.ZodError(response.body.issues);
         }
 

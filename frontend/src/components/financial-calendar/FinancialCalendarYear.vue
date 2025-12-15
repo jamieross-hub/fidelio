@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
-import { defineProps, defineEmits } from "vue";
 
 interface Props {
     year: number;
