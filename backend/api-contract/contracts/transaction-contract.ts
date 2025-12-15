@@ -1,12 +1,13 @@
 import z from "zod";
 import { initContract } from "@ts-rest/core";
-import { CreateTransactionBodySchema, MonthDateSchema, monthNames, MonthSchema, UpdateTransactionBodySchema } from "./types";
-import { yearsFromNow } from "../../utils/dates";
 import { TransactionModelSchema } from "@schemas/pure";
+import { monthNames } from "../constants";
+import { CreateTransactionBodySchema, MonthDateSchema, MonthSchema, UpdateTransactionBodySchema } from "../schemas";
+import { yearsFromNow } from "../utils";
 
-const client = initContract();
+const contract = initContract();
 
-export const transactionContract = client.router({
+export const transactionContract = contract.router({
     getTransaction: {
         method: "GET",
         path: "/transactions/:id",
