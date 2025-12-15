@@ -26,13 +26,9 @@ import { cn } from "@/lib/utils";
 import { DateFormatter, fromDate, getLocalTimeZone } from "@internationalized/date";
 import { CalendarIcon, LoaderCircle } from "lucide-vue-next";
 import type { DateValue } from "@internationalized/date";
-import type {
-    FirstLastDayOfMonthChoices,
-    RecurrenceTypeChoices,
-    UpdateTransactionBodySchema,
-} from "@api-contract/contracts/transactions/types";
 import { apiClient } from "@/api";
 import type { TransactionPureType } from "@schemas/pure/Transaction.pure";
+import type { FirstLastDayOfMonthChoices, RecurrenceTypeChoices, UpdateTransactionBodySchemaType } from "@api-contract";
 
 const df = new DateFormatter("en-GB", { dateStyle: "long" });
 
@@ -91,7 +87,7 @@ const daysOfMonth = ref([
     { label: "28th", value: 28 },
 ]);
 
-const firstLastDayOfMonthChoices = ref<{ label: string; value: FirstLastDayOfMonthChoices }[]>([
+const FIRST_LAST_DAY_OF_MONTH_CHOICES = ref<{ label: string; value: FirstLastDayOfMonthChoices }[]>([
     { label: "First business day of the month", value: "first_business" },
     { label: "Last business day of the month", value: "last_business" },
     { label: "Last day of the month", value: "last" },
@@ -170,7 +166,7 @@ const exitLink = computed(() => {
 
 const transactionsForm = computed(() => {
     if (isExpense.value !== null && amountInPence.value !== undefined && isRecurring.value !== null) {
-        const params: UpdateTransactionBodySchema = {
+        const params: UpdateTransactionBodySchemaType = {
             name: transactionName.value,
             isExpense: isExpense.value,
             amountInPence: amountInPence.value * 100,
@@ -465,7 +461,7 @@ onMounted(() => {
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectItem
-                                                        v-for="option in firstLastDayOfMonthChoices"
+                                                        v-for="option in FIRST_LAST_DAY_OF_MONTH_CHOICES"
                                                         :key="option.value"
                                                         :value="option.value"
                                                     >
@@ -484,7 +480,10 @@ onMounted(() => {
                                                 {{ recurrenceRate > 1 ? `${recurrenceRate} ${recurrenceType}s` : `${recurrenceType}` }} on
                                                 the
                                                 <span class="lowercase">
-                                                    {{ firstLastDayOfMonthChoices.find((el) => el.value === firstLastDayOfMonth)?.label }}
+                                                    {{
+                                                        FIRST_LAST_DAY_OF_MONTH_CHOICES.find((el) => el.value === firstLastDayOfMonth)
+                                                            ?.label
+                                                    }}
                                                 </span>
                                             </small>
                                         </div>
@@ -619,7 +618,7 @@ onMounted(() => {
                                 Transaction occurs every
                                 {{ recurrenceRate > 1 ? `${recurrenceRate} ${recurrenceType}s` : `${recurrenceType}` }} on the
                                 <span class="lowercase">
-                                    {{ firstLastDayOfMonthChoices.find((el) => el.value === firstLastDayOfMonth)?.label }}
+                                    {{ FIRST_LAST_DAY_OF_MONTH_CHOICES.find((el) => el.value === firstLastDayOfMonth)?.label }}
                                 </span>
                             </small>
                             <small v-else-if="recurrenceRate && specificDayOfMonth !== undefined && firstLastDayOfMonth === 'specific'">

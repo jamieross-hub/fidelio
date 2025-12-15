@@ -2,18 +2,19 @@ import router from "@/router";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { apiClient } from "@/api/api";
-import type { UserPureType } from "@schemas/pure/User.pure";
 import { authClient } from "@/api";
+import type { UserPureType } from "@schemas/pure/User.pure";
 
 export const useUserStore = defineStore("user", () => {
     const user = ref<Omit<UserPureType, "transactions"> | null>(null);
 
     async function validateJWT() {
+        if (user.value) return;
+
         const jwtResponse = await apiClient.users.validateJWT();
 
-        if (!user.value && jwtResponse.status === 200) {
+        if (jwtResponse.status === 200) {
             const userResponse = await apiClient.users.getUser();
-
             if (userResponse.status === 200) user.value = userResponse.body;
         }
     }

@@ -73,7 +73,6 @@ router.beforeEach(async (to, from, next) => {
             await validateJWT();
             next();
         } catch (err: any) {
-            console.error(await err.response.json());
             next("/login");
         }
     } else {
@@ -95,7 +94,7 @@ router.afterEach((to, _from) => {
     }
 
     if (to.meta.hasMonth) {
-        const monthNames = [
+        const MONTH_NAMES = [
             "january",
             "february",
             "march",
@@ -116,9 +115,9 @@ router.afterEach((to, _from) => {
 
         const monthLower = month.toLowerCase();
 
-        if (!monthNames.includes(monthLower)) {
-            router.replace({ name: to.name, params: { ...to.params, month: monthNames[new Date().getMonth()] } });
-        } else if (!monthNames.includes(month)) {
+        if (!MONTH_NAMES.includes(monthLower)) {
+            router.replace({ name: to.name, params: { ...to.params, month: MONTH_NAMES[new Date().getMonth()] } });
+        } else if (!MONTH_NAMES.includes(month)) {
             router.replace({ name: to.name, params: { ...to.params, month: monthLower } });
         }
     }
