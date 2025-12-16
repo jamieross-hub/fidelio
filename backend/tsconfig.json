@@ -20,7 +20,7 @@
         "strictNullChecks": true,
         "skipLibCheck": true
     },
-    "include": ["src/**/*", "@types/**/*", "api-contract/**/*", "prisma/**/*"],
+    "include": ["src/**/*", "api-contract/**/*", "prisma/**/*"],
     "tsc-alias": {
         "verbose": false,
         "resolveFullPaths": true

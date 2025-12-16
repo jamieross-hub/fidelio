@@ -1,5 +1,5 @@
-import { groupTransactionsByDaysInMonth, groupTransactionsByMonth } from "../../utils/utils";
-import { prisma } from "@/lib/prisma";
+import { groupTransactionsByDaysInMonth, groupTransactionsByMonth } from "./utils";
+import { prisma } from "@/shared/lib/prisma";
 import type { Transaction } from "../../../prisma/generated/client";
 import type { CreateTransactionBodySchemaType, MonthSchemaType, UpdateTransactionBodySchemaType } from "@api-contract";
 

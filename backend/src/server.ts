@@ -1,8 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { authenticateJWT } from "@/jwt/jwt";
-import { errorLogger, handle500Errors, handleCustomErrors, handlePrismaErrors, handleZodValidationErrors } from "@/errors/middleware";
+import { authenticateJWT } from "@/shared/middleware/jwt";
+import {
+    errorLogger,
+    handle500Errors,
+    handleCustomErrors,
+    handlePrismaErrors,
+    handleZodValidationErrors,
+} from "@/shared/middleware/errors";
 import { createExpressEndpoints, initServer } from "@ts-rest/express";
 import { apiContract, MONTH_NAMES } from "@api-contract";
 import {
