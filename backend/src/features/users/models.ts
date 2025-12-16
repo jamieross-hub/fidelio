@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/shared/lib/prisma";
 import { User } from "../../../prisma/generated/client";
 
 export async function createUser(data: { authId: string; username: string; email: string; image: string }): Promise<User> {

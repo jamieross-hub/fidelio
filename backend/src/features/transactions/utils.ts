@@ -11,23 +11,9 @@ import {
     addBusinessDays,
     subBusinessDays,
 } from "date-fns";
-import { Transaction } from "../../prisma/generated/client";
+import { Transaction } from "../../../prisma/generated/client";
 import type { MonthDateSchemaType, MonthSchemaType } from "@api-contract";
-
-// Function to add the ordinal suffix
-export function getOrdinalSuffix(day: number): "th" | "st" | "nd" | "rd" {
-    if (day > 3 && day < 21) return "th"; // Deal with teens (11th, 12th, 13th, etc.)
-    switch (day % 10) {
-        case 1:
-            return "st";
-        case 2:
-            return "nd";
-        case 3:
-            return "rd";
-        default:
-            return "th";
-    }
-}
+import { getOrdinalSuffix } from "@/shared/utils";
 
 // Function to get transaction dates for the year and populate months
 export const getTransactionDatesInYear = (transaction: Transaction, months: MonthSchemaType[], year: number): void => {

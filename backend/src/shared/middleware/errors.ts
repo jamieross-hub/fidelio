@@ -1,17 +1,8 @@
-import { NextFunction, Response, Request } from "express";
-import { RequestValidationError } from "@ts-rest/express";
-import {
-    PrismaClientInitializationError,
-    PrismaClientKnownRequestError,
-    PrismaClientRustPanicError,
-    PrismaClientUnknownRequestError,
-    PrismaClientValidationError,
-} from "../../prisma/generated/internal/prismaNamespace.js";
-import { ERROR_NAMES, ForbiddenError, UnauthorisedError } from "@api-contract";
-
-type WithOptionalCode<T> = T & { code?: string };
-
-type ErrorMiddlewareFunction<T> = (error: T, request: Request, response: Response, next: NextFunction) => void;
+import type { Response, Request } from "express";
+import { type RequestValidationError } from "@ts-rest/express";
+import { PrismaClientKnownRequestError } from "../../../prisma/generated/internal/prismaNamespace.js";
+import { ERROR_NAMES, UnauthorisedError } from "@api-contract";
+import type { CustomError, ErrorMiddlewareFunction, PrismaError } from "@/shared/types/errors.js";
 
 export const errorLogger: ErrorMiddlewareFunction<Error> = (error, _request, _response, next) => {
     next(error);
@@ -25,13 +16,6 @@ export const handleZodValidationErrors: ErrorMiddlewareFunction<RequestValidatio
         next(error);
     }
 };
-
-type PrismaError =
-    | WithOptionalCode<PrismaClientKnownRequestError>
-    | WithOptionalCode<PrismaClientUnknownRequestError>
-    | WithOptionalCode<PrismaClientRustPanicError>
-    | WithOptionalCode<PrismaClientInitializationError>
-    | WithOptionalCode<PrismaClientValidationError>;
 
 export const handlePrismaErrors: ErrorMiddlewareFunction<PrismaError> = (error, _request, response, next) => {
     if (error instanceof PrismaClientKnownRequestError) {
@@ -55,8 +39,6 @@ export const handlePrismaErrors: ErrorMiddlewareFunction<PrismaError> = (error, 
         next(error);
     }
 };
-
-type CustomError = ForbiddenError | UnauthorisedError;
 
 export const handleCustomErrors: ErrorMiddlewareFunction<CustomError> = (error, _request, response, next) => {
     console.error(error instanceof UnauthorisedError, "hfhfh");
