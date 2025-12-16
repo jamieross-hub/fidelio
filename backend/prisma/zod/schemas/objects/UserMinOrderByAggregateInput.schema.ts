@@ -8,7 +8,8 @@ const makeSchema = () => z.object({
   createdAt: SortOrderSchema.optional(),
   email: SortOrderSchema.optional(),
   username: SortOrderSchema.optional(),
-  image: SortOrderSchema.optional()
+  image: SortOrderSchema.optional(),
+  isGuest: SortOrderSchema.optional()
 }).strict();
 export const UserMinOrderByAggregateInputObjectSchema: z.ZodType<Prisma.UserMinOrderByAggregateInput> = makeSchema() as unknown as z.ZodType<Prisma.UserMinOrderByAggregateInput>;
 export const UserMinOrderByAggregateInputObjectZodSchema = makeSchema();

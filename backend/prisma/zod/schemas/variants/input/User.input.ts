@@ -7,6 +7,7 @@ export const UserInputSchema = z.object({
     email: z.string(),
     username: z.string().optional().nullable(),
     image: z.string().optional().nullable(),
+    isGuest: z.boolean(),
     transactions: z.array(z.unknown())
 }).strict();
 

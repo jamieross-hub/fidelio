@@ -16,6 +16,7 @@ export const UserFindFirstOrThrowSelectSchema: z.ZodType<Prisma.UserSelect> = z.
     email: z.boolean().optional(),
     username: z.boolean().optional(),
     image: z.boolean().optional(),
+    isGuest: z.boolean().optional(),
     transactions: z.boolean().optional(),
     _count: z.boolean().optional()
   }).strict() as unknown as z.ZodType<Prisma.UserSelect>;
@@ -27,6 +28,7 @@ export const UserFindFirstOrThrowSelectZodSchema = z.object({
     email: z.boolean().optional(),
     username: z.boolean().optional(),
     image: z.boolean().optional(),
+    isGuest: z.boolean().optional(),
     transactions: z.boolean().optional(),
     _count: z.boolean().optional()
   }).strict();

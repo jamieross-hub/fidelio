@@ -7,6 +7,7 @@ export const UserModelSchema = z.object({
     email: z.string(),
     username: z.string().nullable(),
     image: z.string().nullable(),
+    isGuest: z.boolean(),
     transactions: z.array(z.unknown())
 }).strict();
 

@@ -10,6 +10,7 @@ const makeSchema = () => z.object({
   email: z.boolean().optional(),
   username: z.boolean().optional(),
   image: z.boolean().optional(),
+  isGuest: z.boolean().optional(),
   transactions: z.union([z.boolean(), z.lazy(() => TransactionFindManySchema)]).optional(),
   _count: z.union([z.boolean(), z.lazy(() => UserCountOutputTypeArgsObjectSchema)]).optional()
 }).strict();
