@@ -9,6 +9,7 @@ const makeSchema = () => z.object({
   email: z.string(),
   username: z.string().optional().nullable(),
   image: z.string().optional().nullable(),
+  isGuest: z.boolean().optional(),
   transactions: z.lazy(() => TransactionUncheckedCreateNestedManyWithoutUserInputObjectSchema).optional()
 }).strict();
 export const UserUncheckedCreateInputObjectSchema: z.ZodType<Prisma.UserUncheckedCreateInput> = makeSchema() as unknown as z.ZodType<Prisma.UserUncheckedCreateInput>;

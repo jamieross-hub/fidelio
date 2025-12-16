@@ -8,7 +8,8 @@ const makeSchema = () => z.object({
   createdAt: z.coerce.date().optional(),
   email: z.string(),
   username: z.string().optional().nullable(),
-  image: z.string().optional().nullable()
+  image: z.string().optional().nullable(),
+  isGuest: z.boolean().optional()
 }).strict();
 export const UserUncheckedCreateWithoutTransactionsInputObjectSchema: z.ZodType<Prisma.UserUncheckedCreateWithoutTransactionsInput> = makeSchema() as unknown as z.ZodType<Prisma.UserUncheckedCreateWithoutTransactionsInput>;
 export const UserUncheckedCreateWithoutTransactionsInputObjectZodSchema = makeSchema();

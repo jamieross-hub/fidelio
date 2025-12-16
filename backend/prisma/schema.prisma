@@ -20,6 +20,7 @@ model User {
   email        String        @unique
   username     String?       @unique
   image        String?
+  isGuest      Boolean       @default(false)
   transactions Transaction[]
 }
 

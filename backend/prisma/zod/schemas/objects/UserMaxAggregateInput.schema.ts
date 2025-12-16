@@ -8,7 +8,8 @@ const makeSchema = () => z.object({
   createdAt: z.literal(true).optional(),
   email: z.literal(true).optional(),
   username: z.literal(true).optional(),
-  image: z.literal(true).optional()
+  image: z.literal(true).optional(),
+  isGuest: z.literal(true).optional()
 }).strict();
 export const UserMaxAggregateInputObjectSchema: z.ZodType<Prisma.UserMaxAggregateInputType> = makeSchema() as unknown as z.ZodType<Prisma.UserMaxAggregateInputType>;
 export const UserMaxAggregateInputObjectZodSchema = makeSchema();

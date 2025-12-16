@@ -29,16 +29,13 @@ export function authenticateJWT(request: Request, _response: Response, next: Nex
                             username: JWT.name,
                             email: JWT.email,
                             image: JWT.image || defaultUserImage,
+                            isGuest: JWT.isGuest,
                         });
 
-                        const { html, subject } = WelcomeEmail({ name: user.username! });
-
-                        sendEmail({
-                            from: EmailSenders.NOREPLY,
-                            to: user.email,
-                            subject,
-                            html,
-                        });
+                        if (!user.isGuest) {
+                            const { html, subject } = WelcomeEmail({ name: user.username! });
+                            sendEmail({ from: EmailSenders.NOREPLY, to: user.email, subject, html });
+                        }
                     }
 
                     request.user = user;

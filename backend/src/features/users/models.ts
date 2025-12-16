@@ -1,7 +1,13 @@
 import { prisma } from "@/shared/lib/prisma";
 import { User } from "../../../prisma/generated/client";
 
-export async function createUser(data: { authId: string; username: string; email: string; image: string }): Promise<User> {
+export async function createUser(data: {
+    authId: string;
+    username: string;
+    email: string;
+    image: string;
+    isGuest: boolean;
+}): Promise<User> {
     try {
         return await prisma.user.create({ data });
     } catch (err) {

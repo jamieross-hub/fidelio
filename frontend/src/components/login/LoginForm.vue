@@ -10,7 +10,7 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 
-const { signUp, login, googleRedirect, signInWithGoogle } = useUserStore();
+const { signUp, login, googleRedirect, signInWithGoogle, signUpAsGuest } = useUserStore();
 
 const formSchema = z.object({
     email: z
@@ -103,16 +103,9 @@ onMounted(() => {
                 </Button>
                 <div class="flex flex-col items-center mt-10 mx-auto">
                     <small class="text-center"> Want to try it out first? </small>
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger>
-                                <small class="text-violet-600">Continue as guest</small>
-                            </TooltipTrigger>
-                            <TooltipContent asChild :motions="{ initial: { scale: 0 }, animate: { scale: 1 } }">
-                                <p>Coming soon</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
+                    <Button class="text-violet-600 hover:text-violet-700 hover:bg-violet-50" variant="ghost" @click="signUpAsGuest">
+                        Continue as guest
+                    </Button>
                 </div>
             </FormFooter>
         </Form>

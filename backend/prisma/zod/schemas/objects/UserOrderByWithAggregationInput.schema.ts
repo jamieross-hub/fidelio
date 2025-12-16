@@ -13,6 +13,7 @@ const makeSchema = () => z.object({
   email: SortOrderSchema.optional(),
   username: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
   image: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
+  isGuest: SortOrderSchema.optional(),
   _count: z.lazy(() => UserCountOrderByAggregateInputObjectSchema).optional(),
   _max: z.lazy(() => UserMaxOrderByAggregateInputObjectSchema).optional(),
   _min: z.lazy(() => UserMinOrderByAggregateInputObjectSchema).optional()

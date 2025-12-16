@@ -6,6 +6,7 @@ export const UserGroupByResultSchema = z.array(z.object({
   email: z.string(),
   username: z.string(),
   image: z.string(),
+  isGuest: z.boolean(),
   _count: z.object({
     id: z.number(),
     authId: z.number(),
@@ -13,6 +14,7 @@ export const UserGroupByResultSchema = z.array(z.object({
     email: z.number(),
     username: z.number(),
     image: z.number(),
+    isGuest: z.number(),
     transactions: z.number()
   }).optional(),
   _min: z.object({

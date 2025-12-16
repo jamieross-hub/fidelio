@@ -54,6 +54,18 @@ export const useUserStore = defineStore("user", () => {
         }
     }
 
+    async function signUpAsGuest() {
+        try {
+            const response = await authClient.postSignUpAsGuest({ body: { serviceName: "income_calculator" } });
+
+            if (response.status === 200) {
+                await login(response.body.email, "");
+            }
+        } catch (err: unknown) {
+            throw err;
+        }
+    }
+
     function googleRedirect() {
         let redirect_uri = "http://localhost:5173/login";
 
@@ -97,5 +109,5 @@ export const useUserStore = defineStore("user", () => {
         router.replace({ name: "login" });
     }
 
-    return { user, validateJWT, login, signUp, signInWithGoogle, googleRedirect, logout };
+    return { user, validateJWT, login, signUp, signInWithGoogle, googleRedirect, logout, signUpAsGuest };
 });
