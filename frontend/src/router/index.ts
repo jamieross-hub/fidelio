@@ -1,8 +1,10 @@
-import { createRouter, createWebHistory } from "vue-router";
 import { usePreviousRoute } from "@/composables/previous-route";
 import { useUserStore } from "@/stores/user-store";
 import { MONTH_NAMES, type MonthName } from "@api-contract";
 import { capitalize } from "lodash";
+import { CalendarIcon, CurrencyIcon } from "lucide-vue-next";
+import { createRouter, createWebHistory, type RouterOptions } from "vue-router";
+import type { ExtendedRouteRecord } from "./types";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +24,8 @@ const router = createRouter({
         },
         {
             path: "/calendar",
+            name: "calendar",
+            meta: { title: "Calendar", navOptions: { icon: CalendarIcon, label: "Calendar" } },
             redirect: () => {
                 return `/calendar/${new Date().getFullYear().toString()}`;
             },
@@ -43,7 +47,7 @@ const router = createRouter({
         {
             path: "/transactions",
             name: "transactions",
-            meta: { title: "Transactions", requiresAuth: true, showNav: true },
+            meta: { title: "Transactions", requiresAuth: true, showNav: true, navOptions: { icon: CurrencyIcon, label: "Transactions" } },
             component: () => import("@/features/transactions/transaction-list-view.vue"),
         },
         {
@@ -59,7 +63,7 @@ const router = createRouter({
             component: () => import("@/features/transactions/transaction-edit-view.vue"),
         },
     ],
-});
+} as RouterOptions & { routes: ExtendedRouteRecord[] });
 
 const previousRoute = usePreviousRoute();
 

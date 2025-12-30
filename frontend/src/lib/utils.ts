@@ -88,3 +88,8 @@ export function mergeMotions(...motions: MotionProps[]): MotionProps {
         return merged;
     }, {});
 }
+
+export function getFormattedDateString(date: Date | string) {
+    const [_, month, dayNumber, year] = new Date(date).toDateString().split(" ");
+    return `${dayNumber} ${month} ${year}`;
+}

@@ -79,6 +79,7 @@ declare module 'vue' {
     LoginInfo: typeof import('./src/features/login/components/LoginInfo.vue')['default']
     MobileSidebar: typeof import('./src/components/MobileSidebar.vue')['default']
     Nav: typeof import('./src/components/Nav.vue')['default']
+    NavigationSidebar: typeof import('./src/components/navigation/NavigationSidebar.vue')['default']
     Popover: typeof import('./src/components/ui/popover/Popover.vue')['default']
     PopoverAnchor: typeof import('./src/components/ui/popover/PopoverAnchor.vue')['default']
     PopoverContent: typeof import('./src/components/ui/popover/PopoverContent.vue')['default']

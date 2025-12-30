@@ -19,9 +19,9 @@ const { settings } = storeToRefs(useSettingsStore());
 
 <template>
     <div
-        class="flex flex-col items-center gap-5 border-1/2 rounded-lg p-5 shadow-sm cursor-pointer hover:border-black hover:shadow-md active:shadow-inner transition-all group"
+        class="flex flex-col items-center gap-5 border-1/2 rounded-lg p-5 cursor-pointer hover:border-black hover:shadow-md active:shadow-inner transition-all group"
     >
-        <div class="flex items-center justify-center w-full font-medium">{{ monthName }}</div>
+        <h1 class="w-full border-b border-gray-100 font-bold">{{ monthName }}</h1>
         <div class="flex flex-col w-full gap-5">
             <div class="flex flex-col justify-between">
                 <div class="flex justify-between">
