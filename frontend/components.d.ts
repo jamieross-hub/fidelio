@@ -58,7 +58,6 @@ declare module 'vue' {
     DropdownMenuSubContent: typeof import('./src/components/ui/dropdown-menu/DropdownMenuSubContent.vue')['default']
     DropdownMenuSubTrigger: typeof import('./src/components/ui/dropdown-menu/DropdownMenuSubTrigger.vue')['default']
     DropdownMenuTrigger: typeof import('./src/components/ui/dropdown-menu/DropdownMenuTrigger.vue')['default']
-    FinancialCalendar: typeof import('./src/components/financial-calendar/FinancialCalendar.vue')['default']
     FinancialCalendarMonth: typeof import('./src/components/financial-calendar/FinancialCalendarMonth.vue')['default']
     FinancialCalendarYear: typeof import('./src/components/financial-calendar/FinancialCalendarYear.vue')['default']
     Form: typeof import('./src/components/form/Form.vue')['default']

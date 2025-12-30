@@ -9,7 +9,7 @@ export const ERROR_NAMES = {
     ForbiddenError: "ForbiddenError",
 } as const;
 
-export const MONTH_NAMES: MonthName[] = [
+export const MONTH_NAMES = [
     "January",
     "February",
     "March",
@@ -24,6 +24,6 @@ export const MONTH_NAMES: MonthName[] = [
     "December",
 ] as const;
 
-export const RECURRENCE_TYPE_CHOICES: RecurrenceTypeChoices[] = ["day", "week", "month"];
+export const RECURRENCE_TYPE_CHOICES = ["day", "week", "month"] as const;
 
-export const FIRST_LAST_DAY_OF_MONTH_CHOICES: FirstLastDayOfMonthChoices[] = ["first_business", "last_business", "last", "specific"];
+export const FIRST_LAST_DAY_OF_MONTH_CHOICES = ["first_business", "last_business", "last", "specific"] as const;
