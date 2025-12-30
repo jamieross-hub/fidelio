@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import LoginForm from "@/components/login/LoginForm.vue";
-import LoginInfo from "@/components/login/LoginInfo.vue";
 import { motion, type MotionProps } from "motion-v";
 
 const containerMotions: MotionProps = {

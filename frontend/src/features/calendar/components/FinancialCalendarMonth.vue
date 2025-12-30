@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useCurrency } from "@/composables/currency";
 import { storeToRefs } from "pinia";
-import { useSettingsStore } from "@/stores/settingsStore";
+import { useSettingsStore } from "@/stores/settings-store";
 
 interface Props {
     monthName: string;

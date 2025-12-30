@@ -1,23 +1,12 @@
 import z from "zod";
 import { CreateTransactionBodySchema, MonthDateSchema, MonthSchema, UpdateTransactionBodySchema } from "../schemas";
+import { FIRST_LAST_DAY_OF_MONTH_CHOICES, MONTH_NAMES, RECURRENCE_TYPE_CHOICES } from "@api-contract/constants";
 
-export type MonthName =
-    | "January"
-    | "February"
-    | "March"
-    | "April"
-    | "May"
-    | "June"
-    | "July"
-    | "August"
-    | "September"
-    | "October"
-    | "November"
-    | "December";
+export type MonthName = (typeof MONTH_NAMES)[number];
 
-export type RecurrenceTypeChoices = "day" | "week" | "month";
+export type RecurrenceTypeChoices = (typeof RECURRENCE_TYPE_CHOICES)[number];
 
-export type FirstLastDayOfMonthChoices = "first_business" | "last_business" | "last" | "specific";
+export type FirstLastDayOfMonthChoices = (typeof FIRST_LAST_DAY_OF_MONTH_CHOICES)[number];
 
 export type MonthSchemaType = z.infer<typeof MonthSchema>;
 

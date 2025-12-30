@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useSettingsStore } from "@/stores/settingsStore";
+import { useSettingsStore } from "@/stores/settings-store";
 import { useCurrency } from "@/composables/currency";
 
 const { settings } = storeToRefs(useSettingsStore());

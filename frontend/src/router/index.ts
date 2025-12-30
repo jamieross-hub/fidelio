@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { usePreviousRoute } from "@/composables/previousRoute";
-import { useUserStore } from "@/stores/userStore";
+import { usePreviousRoute } from "@/composables/previous-route";
+import { useUserStore } from "@/stores/user-store";
+import { MONTH_NAMES, type MonthName } from "@api-contract";
+import { capitalize } from "lodash";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,7 +11,7 @@ const router = createRouter({
             path: "/login",
             name: "login",
             meta: { title: "Login", requiresAuth: false, showNav: false },
-            component: () => import("@/views/LoginView.vue"),
+            component: () => import("@/features/login/login-view.vue"),
         },
         {
             path: "/",
@@ -28,13 +30,13 @@ const router = createRouter({
                     path: ":year",
                     name: "year",
                     meta: { title: "Home", requiresAuth: true, hasYear: true, showNav: true },
-                    component: () => import("@/views/YearView.vue"),
+                    component: () => import("@/features/calendar/calendar-year-view.vue"),
                 },
                 {
                     path: ":year/:month",
                     name: "month",
                     meta: { title: "Month", requiresAuth: true, hasYear: true, hasMonth: true, showNav: true },
-                    component: () => import("@/views/MonthView.vue"),
+                    component: () => import("@/features/calendar/calendar-month-view.vue"),
                 },
             ],
         },
@@ -42,19 +44,19 @@ const router = createRouter({
             path: "/transactions",
             name: "transactions",
             meta: { title: "Transactions", requiresAuth: true, showNav: true },
-            component: () => import("@/views/TransactionsView.vue"),
+            component: () => import("@/features/transactions/transaction-list-view.vue"),
         },
         {
             path: "/transactions/create",
             name: "createTransaction",
             meta: { title: "Create a transaction", requiresAuth: true, showNav: false, slide: true, slideFrom: "right" },
-            component: () => import("@/views/CreateTransactionsView.vue"),
+            component: () => import("@/features/transactions/transaction-create-view.vue"),
         },
         {
             path: "/transactions/:transaction/edit",
             name: "editTransaction",
             meta: { title: "Edit a transaction", requiresAuth: true, showNav: false, slide: true, slideFrom: "right" },
-            component: () => import("@/views/EditTransactionView.vue"),
+            component: () => import("@/features/transactions/transaction-edit-view.vue"),
         },
     ],
 });
@@ -66,61 +68,36 @@ router.beforeEach(async (to, from, next) => {
         previousRoute.value = from;
     }
 
-    if (to.meta.requiresAuth) {
-        const { validateJWT } = useUserStore();
-
-        try {
-            await validateJWT();
-            next();
-        } catch (err: any) {
-            next("/login");
-        }
-    } else {
-        next();
-    }
-});
-
-router.afterEach((to, _from) => {
     if (to.meta.hasYear) {
-        let { year } = to.params;
+        const year = Array.isArray(to.params.year) ? parseInt(to.params.year[0]) : parseInt(to.params.year);
 
-        if (Array.isArray(year)) year = year[0];
-
-        const parsedYear = parseInt(year);
-
-        if (!parsedYear || (parsedYear < 1900 && parsedYear > 3024)) {
-            router.replace({ name: to.name, params: { ...to.params, year: new Date().getFullYear().toString() } });
+        if (isNaN(year) || year < 1900 || year > 3024) {
+            return next({ name: to.name, params: { ...to.params, year: new Date().getFullYear().toString() } });
         }
     }
 
     if (to.meta.hasMonth) {
-        const MONTH_NAMES = [
-            "january",
-            "february",
-            "march",
-            "april",
-            "may",
-            "june",
-            "july",
-            "august",
-            "september",
-            "october",
-            "november",
-            "december",
-        ];
+        const month = (Array.isArray(to.params.month) ? to.params.month[0] : to.params.month) as MonthName;
+        const isValidMonthName = MONTH_NAMES.includes(capitalize(month));
+        const routerMonth = isValidMonthName ? month : MONTH_NAMES[new Date().getMonth()];
+        const routerMonthLower = routerMonth.toLowerCase();
 
-        let { month } = to.params;
-
-        if (Array.isArray(month)) month = month[0];
-
-        const monthLower = month.toLowerCase();
-
-        if (!MONTH_NAMES.includes(monthLower)) {
-            router.replace({ name: to.name, params: { ...to.params, month: MONTH_NAMES[new Date().getMonth()] } });
-        } else if (!MONTH_NAMES.includes(month)) {
-            router.replace({ name: to.name, params: { ...to.params, month: monthLower } });
+        if (month !== routerMonthLower) {
+            return next({ name: to.name, params: { ...to.params, month: routerMonthLower } });
         }
     }
+
+    if (to.meta.requiresAuth) {
+        const { validateJWT } = useUserStore();
+        try {
+            await validateJWT();
+            return next();
+        } catch (err: any) {
+            return next("/login");
+        }
+    }
+
+    return next();
 });
 
 export default router;

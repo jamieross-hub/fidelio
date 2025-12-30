@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useUserStore } from "@/stores/userStore";
+import { useUserStore } from "@/stores/user-store";
 import { Lock, Mail } from "lucide-vue-next";
 import z from "zod";
-import useForm from "@/composables/useForm";
+import useForm from "@/composables/use-form";
 import { onMounted } from "vue";
 import { toast } from "vue-sonner";
 import { getErrorMessage } from "@/lib/utils";
@@ -91,7 +91,7 @@ onMounted(() => {
             </FormFieldGroup>
             <FormFooter class="flex flex-col gap-6">
                 <div class="flex flex-col mt-4 gap-3">
-                    <Button class="rounded-xs py-5" @click="handleLogin" type="submit" :disabled="form.submitting.value">Login</Button>
+                    <Button class="rounded-xs py-5" @click="handleLogin" type="submit" :disabled="form.submitting.value"> Sign in </Button>
                     <Button variant="outline" class="rounded-xs py-5" @click="handleSignUp" type="submit" :disabled="form.submitting.value">
                         Sign up
                     </Button>

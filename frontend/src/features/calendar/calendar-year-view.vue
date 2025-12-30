@@ -5,21 +5,9 @@ import { RouterLink } from "vue-router";
 import debounce from "lodash.debounce";
 import { apiClient } from "@/api";
 
-interface Props {
-    updateTrigger: boolean;
-}
-
-interface Emits {
-    (event: "update:updateTrigger", value: boolean): void;
-}
-
 const route = useRoute();
 
 const router = useRouter();
-
-const props = defineProps<Props>();
-
-const emit = defineEmits<Emits>();
 
 const year = ref<number>(Array.isArray(route.params.year) ? parseInt(route.params.year[0]) : parseInt(route.params.year));
 
@@ -112,16 +100,6 @@ const getYearData = debounce(async () => {
         console.error(err);
     }
 }, 300);
-
-watch(
-    () => props.updateTrigger,
-    async () => {
-        if (props.updateTrigger) {
-            await getYearData();
-            emit("update:updateTrigger", false);
-        }
-    }
-);
 
 watch(
     () => route.params.year,
