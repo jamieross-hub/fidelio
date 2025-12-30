@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { usePreviousRoute } from "@/composables/previousRoute";
+import { usePreviousRoute } from "@/composables/previous-route";
 import { computed, onMounted, ref } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import {

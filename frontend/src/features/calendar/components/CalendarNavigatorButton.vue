@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { SkipBackIcon, TriangleIcon } from "lucide-vue-next";
-import { NavigatorDirection, type CalendarNavigatorButtonProps } from "./types";
+import { NavigatorDirection, type CalendarNavigatorButtonProps } from "@/features/calendar/types";
 
 defineProps<CalendarNavigatorButtonProps>();
 </script>

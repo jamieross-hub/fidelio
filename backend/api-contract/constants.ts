@@ -1,5 +1,3 @@
-import type { FirstLastDayOfMonthChoices, RecurrenceTypeChoices, MonthName } from "./types";
-
 // All possible error names must come from this enum first. This is the single source of truth.
 export const ERROR_NAMES = {
     ValidationError: "ValidationError",

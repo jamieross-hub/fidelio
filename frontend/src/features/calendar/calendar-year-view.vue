@@ -4,21 +4,12 @@ import { useRoute, useRouter } from "vue-router";
 import { RouterLink } from "vue-router";
 import debounce from "lodash.debounce";
 import { apiClient } from "@/api";
-import { MONTH_NAMES } from "@api-contract";
-
-interface Emits {
-    (event: "update:updateTrigger", value: boolean): void;
-}
 
 const route = useRoute();
 
 const router = useRouter();
 
-const emit = defineEmits<Emits>();
-
 const year = ref<number>(Array.isArray(route.params.year) ? parseInt(route.params.year[0]) : parseInt(route.params.year));
-
-MONTH_NAMES;
 
 const nullMonths = [
     {

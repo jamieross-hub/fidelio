@@ -10,7 +10,7 @@ import TooltipContent from "@/components/ui/tooltip/TooltipContent.vue";
 import Button from "@/components/ui/button/Button.vue";
 import { Trash } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
-import { useSettingsStore } from "@/stores/settingsStore";
+import { useSettingsStore } from "@/stores/settings-store";
 import { useCurrency } from "@/composables/currency";
 import { apiClient } from "@/api";
 import type { TransactionPureType } from "@schemas/pure/Transaction.pure";

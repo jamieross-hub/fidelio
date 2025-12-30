@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { apiClient } from "@/api";
 import { useCurrency } from "@/composables/currency";
-import { useSettingsStore } from "@/stores/settingsStore";
+import { useSettingsStore } from "@/stores/settings-store";
 import { storeToRefs } from "pinia";
 import { capitalize, computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";

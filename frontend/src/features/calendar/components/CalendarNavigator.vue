@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { AnimatePresence, motion } from "motion-v";
-import { NavigatorDirection, type CalendarNavigatorEmits, type CalendarNavigatorProps } from "./types";
+import { NavigatorDirection, type CalendarNavigatorEmits, type CalendarNavigatorProps } from "@/features/calendar/types";
 
 const props = defineProps<CalendarNavigatorProps>();
 

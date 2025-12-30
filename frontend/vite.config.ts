@@ -21,6 +21,7 @@ export default defineConfig({
         vueDevTools(),
         Components({
             dts: true,
+            globs: ["src/**/components/**/*.vue"],
         }),
         VitePWA({
             registerType: "autoUpdate",

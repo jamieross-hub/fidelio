@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ChevronUp } from "lucide-vue-next";
-import { useUserStore } from "@/stores/userStore";
+import { useUserStore } from "@/stores/user-store";
 import { storeToRefs } from "pinia";
 
 const userStore = useUserStore();

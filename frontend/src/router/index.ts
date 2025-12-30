@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { usePreviousRoute } from "@/composables/previousRoute";
-import { useUserStore } from "@/stores/userStore";
+import { usePreviousRoute } from "@/composables/previous-route";
+import { useUserStore } from "@/stores/user-store";
 import { MONTH_NAMES, type MonthName } from "@api-contract";
 import { capitalize } from "lodash";
 
@@ -11,7 +11,7 @@ const router = createRouter({
             path: "/login",
             name: "login",
             meta: { title: "Login", requiresAuth: false, showNav: false },
-            component: () => import("@/views/LoginView.vue"),
+            component: () => import("@/features/login/login-view.vue"),
         },
         {
             path: "/",
@@ -30,13 +30,13 @@ const router = createRouter({
                     path: ":year",
                     name: "year",
                     meta: { title: "Home", requiresAuth: true, hasYear: true, showNav: true },
-                    component: () => import("@/views/YearView.vue"),
+                    component: () => import("@/features/calendar/calendar-year-view.vue"),
                 },
                 {
                     path: ":year/:month",
                     name: "month",
                     meta: { title: "Month", requiresAuth: true, hasYear: true, hasMonth: true, showNav: true },
-                    component: () => import("@/views/MonthView.vue"),
+                    component: () => import("@/features/calendar/calendar-month-view.vue"),
                 },
             ],
         },
@@ -44,19 +44,19 @@ const router = createRouter({
             path: "/transactions",
             name: "transactions",
             meta: { title: "Transactions", requiresAuth: true, showNav: true },
-            component: () => import("@/views/TransactionsView.vue"),
+            component: () => import("@/features/transactions/transaction-list-view.vue"),
         },
         {
             path: "/transactions/create",
             name: "createTransaction",
             meta: { title: "Create a transaction", requiresAuth: true, showNav: false, slide: true, slideFrom: "right" },
-            component: () => import("@/views/CreateTransactionsView.vue"),
+            component: () => import("@/features/transactions/transaction-create-view.vue"),
         },
         {
             path: "/transactions/:transaction/edit",
             name: "editTransaction",
             meta: { title: "Edit a transaction", requiresAuth: true, showNav: false, slide: true, slideFrom: "right" },
-            component: () => import("@/views/EditTransactionView.vue"),
+            component: () => import("@/features/transactions/transaction-edit-view.vue"),
         },
     ],
 });
@@ -64,8 +64,6 @@ const router = createRouter({
 const previousRoute = usePreviousRoute();
 
 router.beforeEach(async (to, from, next) => {
-    console.log("Before each Navigation Guard");
-
     if (from.path !== "/") {
         previousRoute.value = from;
     }

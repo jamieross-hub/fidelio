@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import useForm from "@/composables/useForm";
+import useForm from "@/composables/use-form";
 import { provide } from "vue";
 import type z from "zod";
 
