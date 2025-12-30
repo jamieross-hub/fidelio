@@ -1,15 +1,4 @@
 <script setup lang="ts">
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarGroup,
-    SidebarGroupLabel,
-    SidebarGroupContent,
-    SidebarMenu,
-    SidebarMenuItem,
-    SidebarMenuButton,
-} from "@/components/ui/sidebar";
 import { Calendar, Cog, CreditCard, Home, Plus } from "lucide-vue-next";
 import ProfileAvatar from "./ProfileAvatar.vue";
 

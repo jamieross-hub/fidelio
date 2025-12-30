@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { motion } from "motion-v";
 import { CalendarIcon, CurrencyIcon, GlobeIcon } from "lucide-vue-next";
-import InfoCard from "@/components/login/InfoCard.vue";
 import { fadeInFromBottom } from "@/lib/motions";
 
 const infoCards = [

@@ -15,14 +15,8 @@ import {
     mdiCheckboxBlankCircleOutline,
 } from "@mdi/js";
 import { RouterLink } from "vue-router";
-import SelectableCard from "@/components/SelectableCard.vue";
 import { useScroll, useResizeObserver, useWindowSize } from "@vueuse/core";
 import { motion } from "motion-v";
-import Button from "@/components/ui/button/Button.vue";
-import Input from "@/components/ui/input/Input.vue";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
 import { CalendarIcon, LoaderCircle } from "lucide-vue-next";
