@@ -5,6 +5,7 @@ import { capitalize } from "lodash";
 import { CalendarIcon, CurrencyIcon } from "lucide-vue-next";
 import { createRouter, createWebHistory, type RouterOptions } from "vue-router";
 import type { ExtendedRouteRecord } from "./types";
+import { useSidebarStore } from "@/stores/sidebar-store";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -102,6 +103,11 @@ router.beforeEach(async (to, from, next) => {
     }
 
     return next();
+});
+
+router.afterEach(() => {
+    const sidebarStore = useSidebarStore();
+    sidebarStore.isOpen = false;
 });
 
 export default router;

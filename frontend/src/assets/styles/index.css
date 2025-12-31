@@ -128,12 +128,13 @@
         border-color: var(--color-gray-200, currentcolor);
     }
 
-    html {
-        @apply max-w-screen max-h-screen overflow-x-hidden;
+    body,
+    #app {
+        @apply w-screen max-w-screen h-screen max-h-screen overflow-hidden p-0!;
     }
 
     body {
-        @apply bg-background text-foreground p-0! w-screen max-w-screen h-screen max-h-screen overscroll-none;
+        @apply bg-background text-foreground overscroll-none;
     }
 
     label {
@@ -150,6 +151,9 @@ Any component classes, e.g `button`, `card`, etc. Defining these in the componen
 Read more here: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes
 */
 @layer components {
+    .page-section {
+        @apply h-full max-h-full p-3.5 shadow-xl rounded border border-gray-200 bg-card;
+    }
 }
 
 /* 

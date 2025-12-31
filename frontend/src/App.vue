@@ -9,12 +9,12 @@ const route = useRoute();
     <!-- Global toast component - Sonner -->
     <Sonner position="top-center" richColors />
     <TooltipProvider>
-        <main class="w-full flex gap-5 overscroll-none p-5 h-full">
+        <main class="w-full h-full flex gap-5 overscroll-none" :class="{ 'md:p-5': route.meta.showNav }">
             <template v-if="route.meta.showNav">
-                <NavigationSidebar class="max-md:hidden md:w-90 md:min-w-90 h-full min-h-full" />
-                <div class="w-full max-w-full h-full max-h-full overflow-y-auto border p-3.5 shadow-xl rounded border-gray-200 bg-card">
+                <Navigation />
+                <PageLayout>
                     <RouterView />
-                </div>
+                </PageLayout>
             </template>
             <template v-else>
                 <RouterView />

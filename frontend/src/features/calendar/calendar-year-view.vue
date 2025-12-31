@@ -118,7 +118,7 @@ onMounted(async () => {
     <div class="w-full h-full flex flex-col gap-4">
         <div class="flex flex-wrap justify-between max-w-full max-h-full gap-4 pb-24">
             <RouterLink
-                class="min-w-[300px] max-w-full w-[30%] grow"
+                class="min-w-75 max-w-full w-[30%] grow"
                 v-for="(month, index) in months"
                 :to="{ name: 'month', params: { year, month: month.monthName } }"
             >
