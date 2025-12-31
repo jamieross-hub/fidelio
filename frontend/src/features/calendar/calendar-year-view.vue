@@ -115,13 +115,9 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="w-full h-full flex flex-col gap-4">
-        <div class="flex flex-wrap justify-between max-w-full max-h-full gap-4 pb-24">
-            <RouterLink
-                class="min-w-75 max-w-full w-[30%] grow"
-                v-for="(month, index) in months"
-                :to="{ name: 'month', params: { year, month: month.monthName } }"
-            >
+    <div class="w-full h-full">
+        <div class="calendar-grid w-full h-full">
+            <RouterLink v-for="(month, index) in months" :to="{ name: 'month', params: { year, month: month.monthName } }">
                 <FinancialCalendarMonth
                     :key="month.monthName"
                     :monthName="month.monthName"
@@ -143,3 +139,22 @@ onMounted(async () => {
         /> -->
     </div>
 </template>
+
+<style scoped>
+.calendar-grid {
+    display: flex;
+    flex-direction: column;
+
+    @media (width >= 72rem /* 1152px */) {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 1fr;
+    }
+
+    @media (width >= 88rem /* 1408px */) {
+        display: grid;
+        grid-template-columns: 33.333% 33.333% 33.333%;
+        grid-template-rows: 25% 25% 25% 25%;
+    }
+}
+</style>

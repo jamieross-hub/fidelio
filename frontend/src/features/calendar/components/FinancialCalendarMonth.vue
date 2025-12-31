@@ -19,7 +19,7 @@ const { settings } = storeToRefs(useSettingsStore());
 
 <template>
     <div
-        class="flex flex-col items-center gap-5 border-1/2 rounded-lg p-5 cursor-pointer hover:border-black hover:shadow-md active:shadow-inner transition-all group"
+        class="h-full w-full flex flex-col items-center justify-center gap-5 border-1/2 rounded-lg p-5 cursor-pointer hover:border-black hover:shadow-md active:shadow-inner transition-all group"
     >
         <h1 class="w-full border-b border-gray-100 font-bold">{{ monthName }}</h1>
         <div class="flex flex-col w-full gap-5">
