@@ -1,16 +1,19 @@
 <script lang="ts" setup>
 import type { ExtendedRouteRecordNormalized } from "@/router/types";
 import { useUserStore } from "@/stores/user-store";
-import { ref } from "vue";
+import { capitalize, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getFormattedDateString } from "@/lib/utils";
 import { useSidebarStore } from "@/stores/sidebar-store";
+import useTheme from "@/composables/theme";
 
 const route = useRoute();
 const router = useRouter();
 const navRoutes = ref((router.getRoutes() as ExtendedRouteRecordNormalized[]).filter((route) => route.meta.navOptions));
 const userStore = useUserStore();
 const sidebarStore = useSidebarStore();
+const { getTheme, setTheme, theme } = useTheme();
+const darkModeEnabled = ref(theme.value === "dark");
 </script>
 
 <template>
@@ -39,7 +42,18 @@ const sidebarStore = useSidebarStore();
             </RouterLink>
         </nav>
         <footer class="flex flex-col gap-5">
-            <div class="p-2">
+            <div class="flex flex-col gap-5 p-2">
+                <div class="flex items-center space-x-2">
+                    <Switch
+                        class="border-border"
+                        id="theme-switch"
+                        v-model="darkModeEnabled"
+                        @update:model-value="(value) => (value ? setTheme('dark') : setTheme('light'))"
+                    />
+                    <Label for="theme-switch">
+                        <small>{{ capitalize(theme || "") }} mode</small>
+                    </Label>
+                </div>
                 <CurrencySelect class="w-full" />
             </div>
             <hr />
