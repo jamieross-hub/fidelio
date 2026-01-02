@@ -37,8 +37,8 @@ const darkModeEnabled = ref(theme.value === "dark");
                 class="border border-transparent flex gap-2.5 items-center py-2 px-4 rounded"
                 active-class="active-link"
             >
-                <Component :is="navRoute.meta.navOptions.icon" :stroke-width="1" class="text-gray-400" />
-                <p>{{ navRoute.meta.navOptions.label }}</p>
+                <Component :is="navRoute.meta.navOptions.icon" :size="16" :stroke-width="1" class="text-gray-400" />
+                <small class="font-light">{{ navRoute.meta.navOptions.label }}</small>
             </RouterLink>
         </nav>
         <footer class="flex flex-col gap-5">
