@@ -72,7 +72,7 @@ onMounted(() => {
         <Form
             :formSchema="formSchema"
             :form="form"
-            class="flex flex-col gap-4 p-10 sm:p-15 md:shadow-xl bg-white rounded-xl"
+            class="flex flex-col gap-4 p-10 sm:p-15 md:shadow-xl bg-card rounded-xl"
             @submit.prevent=""
         >
             <FormFieldGroup field="email">
@@ -103,9 +103,7 @@ onMounted(() => {
                 </Button>
                 <div class="flex flex-col items-center mt-10 mx-auto">
                     <small class="text-center"> Want to try it out first? </small>
-                    <Button class="text-violet-600 hover:text-violet-700 hover:bg-violet-50" variant="ghost" @click="signUpAsGuest">
-                        Continue as guest
-                    </Button>
+                    <Button class="text-primary hover:bg-accent/50" variant="ghost" @click="signUpAsGuest"> Continue as guest </Button>
                 </div>
             </FormFooter>
         </Form>

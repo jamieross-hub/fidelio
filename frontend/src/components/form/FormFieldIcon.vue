@@ -6,6 +6,6 @@ defineProps<{ icon: Component }>();
 
 <template>
     <span class="absolute start-0 inset-y-0 flex items-center justify-center px-3">
-        <component :is="icon" class="size-4 text-muted-foreground/50 group-focus-within:text-black" />
+        <component :is="icon" class="size-4 text-muted-foreground/50 group-focus-within:text-primary" />
     </span>
 </template>

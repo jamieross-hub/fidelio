@@ -1,8 +1,15 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { RouterView, useRoute } from "vue-router";
 import "vue-sonner/style.css";
+import useTheme from "./composables/theme";
 
 const route = useRoute();
+const { getTheme, setTheme } = useTheme();
+
+onMounted(() => {
+    setTheme(getTheme());
+});
 </script>
 
 <template>

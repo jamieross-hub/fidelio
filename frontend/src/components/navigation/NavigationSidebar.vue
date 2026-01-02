@@ -31,8 +31,8 @@ const sidebarStore = useSidebarStore();
                 v-for="navRoute in navRoutes"
                 :key="navRoute.name"
                 :to="navRoute"
-                class="flex gap-2.5 items-center py-2 px-4 rounded"
-                active-class="bg-gray-50 border"
+                class="border border-transparent flex gap-2.5 items-center py-2 px-4 rounded"
+                active-class="active-link"
             >
                 <Component :is="navRoute.meta.navOptions.icon" :stroke-width="1" class="text-gray-400" />
                 <p>{{ navRoute.meta.navOptions.label }}</p>
@@ -56,3 +56,13 @@ const sidebarStore = useSidebarStore();
         </footer>
     </aside>
 </template>
+
+<style scoped>
+.active-link * {
+    color: var(--color-secondary-foreground);
+}
+.active-link {
+    background-color: var(--color-secondary);
+    border-color: var(--color-border);
+}
+</style>

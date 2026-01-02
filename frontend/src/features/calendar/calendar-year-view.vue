@@ -7,8 +7,6 @@ import { apiClient } from "@/api";
 
 const route = useRoute();
 
-const router = useRouter();
-
 const year = ref<number>(Array.isArray(route.params.year) ? parseInt(route.params.year[0]) : parseInt(route.params.year));
 
 const nullMonths = [
@@ -117,16 +115,16 @@ onMounted(async () => {
 <template>
     <div class="w-full h-full">
         <div class="calendar-grid w-full h-full">
-            <RouterLink v-for="(month, index) in months" :to="{ name: 'month', params: { year, month: month.monthName } }">
-                <FinancialCalendarMonth
-                    :key="month.monthName"
-                    :monthName="month.monthName"
-                    :income="month.income"
-                    :expenses="month.expenses"
-                    :remaining="month.remaining"
-                    :isCurrentMonth="new Date().getMonth() === index"
-                />
-            </RouterLink>
+            <FinancialCalendarMonth
+                v-for="(month, index) in months"
+                :key="month.monthName"
+                :monthName="month.monthName"
+                :year="year"
+                :income="month.income"
+                :expenses="month.expenses"
+                :remaining="month.remaining"
+                :isCurrentMonth="new Date().getMonth() === index"
+            />
         </div>
         <!-- This is a fixed overlay that sits behind the navigator. It acts as an accidental touch protection and also adds some visual appeal. -->
         <!-- <div class="bg-neutral-300/50 fixed bottom-0 left-0 h-[75px] w-full blur-xl"></div> -->
