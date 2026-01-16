@@ -166,7 +166,6 @@
 }
 
 /* These are the base defaults for HTML elements */
-
 @layer base {
     * {
         @apply border-border outline-ring/50;
