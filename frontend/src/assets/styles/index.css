@@ -211,7 +211,7 @@ Read more here: https://tailwindcss.com/docs/adding-custom-styles#adding-compone
 */
 @layer components {
     .page-section {
-        @apply h-full max-h-full p-3.5 shadow-xl rounded border border-border bg-sidebar;
+        @apply w-full h-full max-w-full max-h-full overflow-y-auto p-3.5 shadow-xl rounded border border-border bg-sidebar;
     }
 }
 

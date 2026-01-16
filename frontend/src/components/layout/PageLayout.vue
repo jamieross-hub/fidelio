@@ -1,5 +1,5 @@
 <template>
-    <section class="page-section w-full max-w-full overflow-y-auto">
+    <section class="page-section">
         <slot></slot>
     </section>
 </template>
