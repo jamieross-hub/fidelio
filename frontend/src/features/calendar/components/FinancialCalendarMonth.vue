@@ -21,7 +21,7 @@ const { settings } = storeToRefs(useSettingsStore());
 <template>
     <RouterLink :to="{ name: 'month', params: { year, month: monthName } }">
         <div
-            class="h-full w-full flex flex-col items-center justify-center gap-5 border border-transparent rounded-lg p-5 cursor-pointer hover:bg-secondary hover:border-border focus-visible:bg-secondary focus:border focus:border-border active:shadow-inner group"
+            class="h-full w-full flex flex-col items-center justify-center gap-5 border border-transparent rounded-lg p-5 cursor-pointer hover:bg-card hover:border-border focus-visible:bg-card focus:border focus:border-border active:shadow-inner group transition-all ease-out"
         >
             <h1 class="w-full border-b border-border font-bold">{{ monthName }}</h1>
             <div class="flex flex-col w-full gap-5">

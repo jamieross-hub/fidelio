@@ -114,6 +114,13 @@ onMounted(async () => {
 
 <template>
     <div class="w-full h-full">
+        <div class="flex flex-col bg-sidebar">
+            <div class="flex p-3 justify-between items-center">
+                <h1 class="text-2xl font-bold">Calendar</h1>
+                <FinancialCalendarYear :year="year" @update:year="year = $event" />
+            </div>
+            <hr />
+        </div>
         <div class="calendar-grid w-full h-full">
             <FinancialCalendarMonth
                 v-for="(month, index) in months"
