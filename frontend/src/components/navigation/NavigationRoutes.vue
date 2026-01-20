@@ -8,7 +8,7 @@ const navRoutes = ref((router.getRoutes() as ExtendedRouteRecordNormalized[]).fi
 </script>
 
 <template>
-    <nav class="flex flex-col gap-2 p-2 h-full max-h-full overflow-y-auto">
+    <nav class="flex flex-col gap-2 h-full max-h-full overflow-y-auto">
         <RouterLink
             v-for="navRoute in navRoutes"
             :key="navRoute.name"
@@ -17,7 +17,7 @@ const navRoutes = ref((router.getRoutes() as ExtendedRouteRecordNormalized[]).fi
             active-class="active-link bg-primary/15 hover:bg-primary/15"
         >
             <Component :is="navRoute.meta.navOptions.icon" :size="16" :stroke-width="1" class="max-md:hidden text-gray-400" />
-            <small class="max-md:text-lg md:font-light">{{ navRoute.meta.navOptions.label }}</small>
+            <p class="max-md:text-lg md:font-light">{{ navRoute.meta.navOptions.label }}</p>
         </RouterLink>
     </nav>
 </template>
