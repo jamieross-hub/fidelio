@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { motion, type MotionProps } from "motion-v";
 
-const primary = window.getComputedStyle(document.body).getPropertyValue("--primary");
-const background = window.getComputedStyle(document.body).getPropertyValue("--background");
+const primary = `${window.getComputedStyle(document.body).getPropertyValue("--primary").split(")")[0]} / 0.3)`;
+const background = window.getComputedStyle(document.body).getPropertyValue("--sidebar");
 const transparentBackground = `${background.split(")")[0]} / 0)`;
 
 const containerMotions: MotionProps = {
