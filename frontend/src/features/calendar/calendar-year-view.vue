@@ -104,7 +104,7 @@ watch(
     async () => {
         year.value = Array.isArray(route.params.year) ? parseInt(route.params.year[0]) : parseInt(route.params.year);
         await getYearData();
-    }
+    },
 );
 
 onMounted(async () => {
@@ -113,15 +113,12 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="w-full h-full">
-        <div class="flex flex-col bg-sidebar">
-            <div class="flex p-3 justify-between items-center">
-                <h1 class="text-2xl font-bold">Calendar</h1>
-                <FinancialCalendarYear :year="year" @update:year="year = $event" />
-            </div>
-            <hr />
+    <div class="w-full h-full flex flex-col overflow-y-auto">
+        <div class="sticky top-0 flex justify-between items-center p-6 bg-sidebar">
+            <h1 class="text-2xl font-bold">Calendar</h1>
+            <FinancialCalendarYear :year="year" @update:year="year = $event" />
         </div>
-        <div class="calendar-grid w-full h-full">
+        <div class="p-3.5 calendar-grid w-full h-full">
             <FinancialCalendarMonth
                 v-for="(month, index) in months"
                 :key="month.monthName"
@@ -133,15 +130,6 @@ onMounted(async () => {
                 :isCurrentMonth="new Date().getMonth() === index"
             />
         </div>
-        <!-- This is a fixed overlay that sits behind the navigator. It acts as an accidental touch protection and also adds some visual appeal. -->
-        <!-- <div class="bg-neutral-300/50 fixed bottom-0 left-0 h-[75px] w-full blur-xl"></div> -->
-        <!-- <CalendarNavigator
-            v-model:year="year"
-            @update:year="
-                months = nullMonths;
-                router.replace({ name: 'year', params: { year } });
-            "
-        /> -->
     </div>
 </template>
 
