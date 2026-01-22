@@ -26,4 +26,8 @@ const navRoutes = ref((router.getRoutes() as ExtendedRouteRecordNormalized[]).fi
 .active-link * {
     color: var(--color-primary);
 }
+
+.active-link p {
+    font-weight: var(--font-weight-medium);
+}
 </style>
