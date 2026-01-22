@@ -12,7 +12,13 @@ const schemaPath = fileURLToPath(new URL(process.env.SCHEMA_PATH || "../backend/
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
-        vue(),
+        vue({
+            template: {
+                compilerOptions: {
+                    comments: false,
+                },
+            },
+        }),
         vueDevTools(),
         Components({
             dts: true,
