@@ -1,28 +1,46 @@
 <script lang="ts" setup>
-import { MenuIcon } from "lucide-vue-next";
 import { ref } from "vue";
+import { DrawerHandle, DrawerRoot, DrawerTrigger, DrawerPortal, DrawerOverlay, DrawerContent } from "vaul-vue";
 
-const isOpen = ref(false);
+const isOpen = ref(true);
+
+const snapPoints = [`${window.innerHeight - 215}px`, 1];
+const activeSnapPoint = ref(snapPoints[0]);
+
+const setSnap = (snap: number | string) => {
+    if (typeof snap === "number") activeSnapPoint.value = snap;
+};
 </script>
 
 <template>
-    <div
-        v-if="isOpen"
-        class="fixed top-0 left-0 md:hidden w-full h-full bg-black/40 backdrop-blur-xl transition-all ease-out"
-        @click="isOpen = false"
-    ></div>
-    <div class="md:hidden fixed w-fit h-fit bottom-4 right-4">
-        <div
-            class="flex flex-col p-0! pb-3! absolute -translate-y-full right-0 items-end min-h-fit transition-all ease-out opacity-0"
-            :class="{ 'opacity-100': isOpen }"
-        >
-            <NavigationRoutes v-if="isOpen" class="p-0! pb-3! items-end" />
-            <ThemeSwitch class="menu-item" />
-        </div>
-        <Button variant="default" class="md:hidden z-2 p-5!" @click="isOpen = !isOpen">
-            <MenuIcon :size="30" />
-        </Button>
-    </div>
+    <DrawerRoot
+        direction="bottom"
+        :open="isOpen"
+        :handleOnly="true"
+        :dismissible="false"
+        :snap-points="snapPoints"
+        :active-snap-point="activeSnapPoint"
+        :modal="false"
+        @update:active-snap-point="setSnap"
+    >
+        <DrawerPortal>
+            <DrawerContent
+                class="flex flex-col gap-5 z-9999 h-full mt-24 max-h-fit fixed bottom-0 left-0 right-0 bg-card p-4 menu-shadow rounded-t-2xl"
+            >
+                <DrawerHandle class="bg-accent! w-24!"></DrawerHandle>
+                <div>
+                    <p>Content</p>
+                    <p>Content</p>
+                    <p>Content</p>
+                    <p>Content</p>
+                    <p>Content</p>
+                    <p>Content</p>
+                    <p>Content</p>
+                    <p>Content</p>
+                </div>
+            </DrawerContent>
+        </DrawerPortal>
+    </DrawerRoot>
 </template>
 
 <style scoped>
@@ -35,5 +53,9 @@ const isOpen = ref(false);
     border-radius: 0.25rem;
     transition: 0.1s ease-out;
     cursor: pointer;
+}
+
+.menu-shadow {
+    box-shadow: 0 -5px 13px 1px rgba(0, 0, 0, 0.1);
 }
 </style>
