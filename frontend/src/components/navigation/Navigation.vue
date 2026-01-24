@@ -2,5 +2,5 @@
     <!-- Desktop -->
     <NavigationSidebar />
     <!-- Mobile -->
-    <NavigationSidebarToggle />
+    <NavigationSidebarMobile />
 </template>

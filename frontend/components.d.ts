@@ -82,6 +82,7 @@ declare module 'vue' {
     NavigationBackgroundOverlay: typeof import('./src/components/navigation/NavigationBackgroundOverlay.vue')['default']
     NavigationRoutes: typeof import('./src/components/navigation/NavigationRoutes.vue')['default']
     NavigationSidebar: typeof import('./src/components/navigation/NavigationSidebar.vue')['default']
+    NavigationSidebarMobile: typeof import('./src/components/navigation/NavigationSidebarMobile.vue')['default']
     NavigationSidebarToggle: typeof import('./src/components/navigation/NavigationSidebarToggle.vue')['default']
     PageLayout: typeof import('./src/components/layout/PageLayout.vue')['default']
     Popover: typeof import('./src/components/ui/popover/Popover.vue')['default']
