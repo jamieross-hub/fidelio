@@ -11,7 +11,7 @@ const { currencies, getCurrencyFromCode } = useCurrency();
     <Select
         class="border border-accent"
         v-model="settings.currency.code"
-        @update:model-value="code => settings.currency = getCurrencyFromCode(code as string)!"
+        @update:model-value="(code) => (settings.currency = getCurrencyFromCode(code as string)!)"
     >
         <SelectTrigger v-bind="$attrs">
             <SelectValue :placeholder="settings.currency.label" />

@@ -3,6 +3,10 @@ import { computed, onMounted, ref, useTemplateRef, watchEffect, type Component }
 import { DrawerHandle, DrawerRoot, DrawerPortal, DrawerContent } from "vaul-vue";
 import { clamp } from "lodash";
 import { remToPixels } from "@/lib/utils";
+import { useUserStore } from "@/stores/user-store";
+import { getFormattedDateString } from "@/lib/utils";
+
+const userStore = useUserStore();
 
 const snapPoints = ref<(string | number)[]>([]);
 const activeSnapPoint = ref();
@@ -61,6 +65,16 @@ watchEffect(() => {
             >
                 <DrawerHandle ref="handle" class="bg-accent! w-24!" />
                 <NavigationRoutes class="h-fit!" />
+                <hr />
+                <footer class="flex justify-between items-center">
+                    <template v-if="userStore.user">
+                        <img :src="userStore.user.image ?? undefined" class="w-10 h-10" />
+                    </template>
+                    <div class="flex gap-5">
+                        <ThemeSwitch />
+                        <CurrencySelect class="w-full" />
+                    </div>
+                </footer>
             </DrawerContent>
         </DrawerPortal>
     </DrawerRoot>

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import useTheme from "@/composables/theme";
-import { ref, capitalize } from "vue";
+import { ref, capitalize, computed } from "vue";
 
 const { setTheme, theme } = useTheme();
-const darkModeEnabled = ref(theme.value === "dark");
+const darkModeEnabled = computed(() => theme.value === "dark");
 </script>
 
 <template>
@@ -11,10 +11,10 @@ const darkModeEnabled = ref(theme.value === "dark");
         <Switch
             class="border-border"
             id="theme-switch"
-            v-model="darkModeEnabled"
+            :modelValue="darkModeEnabled"
             @update:model-value="(value) => (value ? setTheme('dark') : setTheme('light'))"
         />
-        <Label for="theme-switch">
+        <Label for="theme-switch" class="text-nowrap">
             <small>{{ capitalize(theme || "") }} mode</small>
         </Label>
     </div>
