@@ -51,8 +51,8 @@ type DeepMerge<T, U> = {
                 : U[K]
             : T[K]
         : K extends keyof U
-        ? U[K]
-        : never;
+          ? U[K]
+          : never;
 };
 
 export function mergeMotions<T extends MotionProps, U extends MotionProps>(a: T, b: U): DeepMerge<T, U>;
@@ -60,7 +60,7 @@ export function mergeMotions<T extends MotionProps, U extends MotionProps>(a: T,
 export function mergeMotions<T extends MotionProps, U extends MotionProps, V extends MotionProps>(
     a: T,
     b: U,
-    c: V
+    c: V,
 ): DeepMerge<DeepMerge<T, U>, V>;
 
 // fallback for any number
@@ -92,4 +92,13 @@ export function mergeMotions(...motions: MotionProps[]): MotionProps {
 export function getFormattedDateString(date: Date | string) {
     const [_, month, dayNumber, year] = new Date(date).toDateString().split(" ");
     return `${dayNumber} ${month} ${year}`;
+}
+
+export function getDocumentFontSize() {
+    return parseFloat(window.getComputedStyle(document.documentElement).fontSize);
+}
+
+export function remToPixels(rem: number) {
+    const fontSize = getDocumentFontSize();
+    return rem * fontSize;
 }

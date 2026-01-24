@@ -13,11 +13,11 @@ const navRoutes = ref((router.getRoutes() as ExtendedRouteRecordNormalized[]).fi
             v-for="navRoute in navRoutes"
             :key="navRoute.name"
             :to="navRoute"
-            class="border border-transparent flex gap-2.5 items-center py-2 md:px-4 rounded hover:bg-muted"
+            class="border border-transparent flex gap-2.5 items-center py-2 px-4 rounded hover:bg-muted"
             active-class="active-link bg-primary/15 hover:bg-primary/15"
         >
-            <Component :is="navRoute.meta.navOptions.icon" :size="16" :stroke-width="1" class="max-md:hidden text-gray-400" />
-            <p class="max-md:text-lg md:font-light">{{ navRoute.meta.navOptions.label }}</p>
+            <Component :is="navRoute.meta.navOptions.icon" :size="16" :stroke-width="1" class="text-foreground" />
+            <p class="font-light">{{ navRoute.meta.navOptions.label }}</p>
         </RouterLink>
     </nav>
 </template>

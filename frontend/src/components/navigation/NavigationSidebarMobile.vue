@@ -1,23 +1,39 @@
 <script lang="ts" setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, useTemplateRef, watchEffect, type Component } from "vue";
 import { DrawerHandle, DrawerRoot, DrawerPortal, DrawerContent } from "vaul-vue";
 import { clamp } from "lodash";
+import { remToPixels } from "@/lib/utils";
 
-const snapPoints = [`${window.innerHeight - 215}px`, 1];
-const activeSnapPoint = ref(snapPoints[0]);
+const snapPoints = ref<(string | number)[]>([]);
+const activeSnapPoint = ref();
 
-const isOpen = computed(() => activeSnapPoint.value === snapPoints[1]);
+const isOpen = computed(() => snapPoints.value && activeSnapPoint.value === snapPoints.value[1]);
 
-const dragPoint = ref(1);
+const dragPoint = ref(0);
 
 const overlayOpacity = computed(() => clamp(dragPoint.value, 0, 0.5));
 
 const setSnap = (snap: number | string) => {
+    if (!snapPoints.value) return;
     activeSnapPoint.value = snap;
-    dragPoint.value = clamp(snapPoints.indexOf(snap), 0, 0.5);
+    dragPoint.value = clamp(snapPoints.value.indexOf(snap), 0, 0.5);
 };
 
 const handleDrag = (value: number) => (dragPoint.value = (1 - value) / 2);
+
+const drawer = useTemplateRef("drawer");
+const handle = useTemplateRef("handle");
+
+const spacing = parseFloat(window.getComputedStyle(document.documentElement).getPropertyValue("--spacing"));
+const padding = remToPixels(spacing * 5);
+const gap = remToPixels(spacing * 4);
+
+watchEffect(() => {
+    if (!drawer.value || !handle.value) return;
+    const handleSectionHeight = drawer.value.$el.offsetHeight - (spacing + padding + gap + handle.value.$el.offsetHeight);
+    snapPoints.value = [`${window.innerHeight - handleSectionHeight}px`, 1];
+    activeSnapPoint.value = snapPoints.value[0];
+});
 </script>
 
 <template>
@@ -40,19 +56,11 @@ const handleDrag = (value: number) => (dragPoint.value = (1 - value) / 2);
                 :style="{ opacity: overlayOpacity, pointerEvents: isOpen ? 'auto' : 'none' }"
             ></div>
             <DrawerContent
+                ref="drawer"
                 class="md:hidden flex flex-col gap-5 z-9999 h-full mt-24 max-h-fit fixed bottom-0 left-0 right-0 bg-card p-4 menu-shadow rounded-t-2xl"
             >
-                <DrawerHandle class="bg-accent! w-24!" />
-                <div>
-                    <p>Content</p>
-                    <p>Content</p>
-                    <p>Content</p>
-                    <p>Content</p>
-                    <p>Content</p>
-                    <p>Content</p>
-                    <p>Content</p>
-                    <p>Content</p>
-                </div>
+                <DrawerHandle ref="handle" class="bg-accent! w-24!" />
+                <NavigationRoutes class="h-fit!" />
             </DrawerContent>
         </DrawerPortal>
     </DrawerRoot>
