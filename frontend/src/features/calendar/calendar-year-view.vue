@@ -113,24 +113,21 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="w-full h-full flex flex-col overflow-y-auto">
-        <PageHeader>
-            <h1 class="text-2xl font-bold">Calendar</h1>
-            <FinancialCalendarYear :year="year" @update:year="year = $event" />
-        </PageHeader>
-        <PageContent class="calendar-grid">
-            <FinancialCalendarMonth
-                v-for="(month, index) in months"
-                :key="month.monthName"
-                :monthName="month.monthName"
-                :year="year"
-                :income="month.income"
-                :expenses="month.expenses"
-                :remaining="month.remaining"
-                :isCurrentMonth="new Date().getMonth() === index"
-            />
-        </PageContent>
-    </div>
+    <PageHeader title="Calendar">
+        <FinancialCalendarYear :year="year" @update:year="year = $event" />
+    </PageHeader>
+    <PageContent class="calendar-grid">
+        <FinancialCalendarMonth
+            v-for="(month, index) in months"
+            :key="month.monthName"
+            :monthName="month.monthName"
+            :year="year"
+            :income="month.income"
+            :expenses="month.expenses"
+            :remaining="month.remaining"
+            :isCurrentMonth="new Date().getMonth() === index"
+        />
+    </PageContent>
 </template>
 
 <style scoped>
