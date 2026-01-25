@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref, useTemplateRef, watchEffect, type Component } from "vue";
-import { DrawerHandle, DrawerRoot, DrawerPortal, DrawerContent } from "vaul-vue";
+import { DrawerHandle, DrawerRoot, DrawerPortal, DrawerContent, DrawerTitle, DrawerDescription } from "vaul-vue";
 import { clamp } from "lodash";
 import { remToPixels } from "@/lib/utils";
 import { useUserStore } from "@/stores/user-store";
 import { getFormattedDateString } from "@/lib/utils";
+import { VisuallyHidden } from "reka-ui";
 
 const userStore = useUserStore();
 
@@ -63,6 +64,10 @@ watchEffect(() => {
                 ref="drawer"
                 class="md:hidden flex flex-col gap-5 z-9999 h-full mt-24 max-h-fit fixed bottom-0 left-0 right-0 bg-card p-4 menu-shadow rounded-t-2xl"
             >
+                <VisuallyHidden>
+                    <DrawerTitle>Navigation drawer</DrawerTitle>
+                    <DrawerDescription>Mobile drawer containing the app routes and settings</DrawerDescription>
+                </VisuallyHidden>
                 <DrawerHandle ref="handle" class="bg-accent! w-24!" />
                 <NavigationRoutes class="h-fit!" />
                 <hr />
