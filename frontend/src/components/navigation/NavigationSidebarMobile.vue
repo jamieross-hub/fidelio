@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, useTemplateRef, watchEffect, type Component } from "vue";
+import { computed, ref, useTemplateRef, watchEffect } from "vue";
 import { DrawerHandle, DrawerRoot, DrawerPortal, DrawerContent, DrawerTitle, DrawerDescription } from "vaul-vue";
 import { clamp } from "lodash";
 import { remToPixels } from "@/lib/utils";
 import { useUserStore } from "@/stores/user-store";
-import { getFormattedDateString } from "@/lib/utils";
 import { VisuallyHidden } from "reka-ui";
 
 const userStore = useUserStore();

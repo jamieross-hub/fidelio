@@ -16,8 +16,10 @@ const { currencies, getCurrencyFromCode } = useCurrency();
         <SelectTrigger v-bind="$attrs">
             <SelectValue :placeholder="settings.currency.label" />
         </SelectTrigger>
-        <SelectContent position-strategy="fixed" class="z-9999">
-            <SelectItem v-for="currency in currencies" :key="currency.code" :value="currency.code">{{ currency.label }}</SelectItem>
+        <SelectContent class="z-9999">
+            <SelectItem v-for="currency in currencies" :key="currency.code" :value="currency.code">
+                {{ currency.label }}
+            </SelectItem>
         </SelectContent>
     </Select>
 </template>
