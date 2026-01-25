@@ -114,11 +114,11 @@ onMounted(async () => {
 
 <template>
     <div class="w-full h-full flex flex-col overflow-y-auto">
-        <div class="sticky top-0 flex justify-between items-center p-6 bg-sidebar">
+        <PageHeader>
             <h1 class="text-2xl font-bold">Calendar</h1>
             <FinancialCalendarYear :year="year" @update:year="year = $event" />
-        </div>
-        <div class="p-3.5 calendar-grid w-full h-full">
+        </PageHeader>
+        <PageContent class="calendar-grid">
             <FinancialCalendarMonth
                 v-for="(month, index) in months"
                 :key="month.monthName"
@@ -129,7 +129,7 @@ onMounted(async () => {
                 :remaining="month.remaining"
                 :isCurrentMonth="new Date().getMonth() === index"
             />
-        </div>
+        </PageContent>
     </div>
 </template>
 

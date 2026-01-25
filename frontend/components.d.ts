@@ -84,6 +84,8 @@ declare module 'vue' {
     NavigationSidebar: typeof import('./src/components/navigation/NavigationSidebar.vue')['default']
     NavigationSidebarMobile: typeof import('./src/components/navigation/NavigationSidebarMobile.vue')['default']
     NavigationSidebarToggle: typeof import('./src/components/navigation/NavigationSidebarToggle.vue')['default']
+    PageContent: typeof import('./src/components/layout/PageContent.vue')['default']
+    PageHeader: typeof import('./src/components/layout/PageHeader.vue')['default']
     PageLayout: typeof import('./src/components/layout/PageLayout.vue')['default']
     Popover: typeof import('./src/components/ui/popover/Popover.vue')['default']
     PopoverAnchor: typeof import('./src/components/ui/popover/PopoverAnchor.vue')['default']
