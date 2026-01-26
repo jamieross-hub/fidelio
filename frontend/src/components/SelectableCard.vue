@@ -22,10 +22,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
     <button
-        class="px-20! py-10! border-1 rounded-lg flex flex-col items-center cursor-pointer group"
+        class="bg-card px-20! py-10! border border-border rounded-lg flex flex-col items-center cursor-pointer group"
         :class="{
-            'bg-blue-100 hover:bg-blue-200 border-blue-600!': modelValue === selectedValue,
-            'hover:bg-gray-100': modelValue !== selectedValue,
+            'bg-accent/50! hover:bg-accent/70! border-accent!': modelValue === selectedValue,
+            'hover:bg-muted': modelValue !== selectedValue,
         }"
         @click="emit('update:modelValue', modelValue === selectedValue ? deselectValue : selectedValue)"
     >
@@ -35,15 +35,15 @@ const props = withDefaults(defineProps<Props>(), {
             :size="60"
             class="transition-all"
             :class="{
-                'text-blue-600': modelValue === selectedValue,
-                'text-gray-500 group-hover:text-gray-600': modelValue !== selectedValue,
+                'text-primary': modelValue === selectedValue,
+                'text-foreground/50 group-hover:text-foreground/70': modelValue !== selectedValue,
             }"
         />
         <p
             class="transition-all"
             :class="{
-                'text-blue-500': modelValue === selectedValue,
-                'text-gray-400 group-hover:text-gray-600': modelValue !== selectedValue,
+                'text-primary': modelValue === selectedValue,
+                'text-foreground/50 group-hover:text-foreground/70': modelValue !== selectedValue,
             }"
         >
             {{ label }}
