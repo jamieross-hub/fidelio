@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import useTheme from "@/composables/theme";
-import { ref, capitalize, computed } from "vue";
+import { capitalize, computed } from "vue";
 
 const { setTheme, theme } = useTheme();
 const darkModeEnabled = computed(() => theme.value === "dark");
