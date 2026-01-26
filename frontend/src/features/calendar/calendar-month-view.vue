@@ -59,15 +59,15 @@ onMounted(() => {
 </script>
 
 <template>
-    <div v-if="dates" class="flex flex-col gap-5 p-6">
-        <h1 class="mx-auto text-lg">{{ formattedMonthName }} {{ year }}</h1>
-        <div v-for="date in filteredDates" :key="date.date" class="flex flex-col p-6" @click="date.collapsed = !date.collapsed">
-            <h1 class="font-bold italic text-2xl border-b-1 pb-2 select-none sticky top-0 bg-white">{{ date.date }}</h1>
-            <div class="flex flex-col overflow-hidden" :class="{ 'h-0': date.collapsed }">
+    <PageHeader :title="`${formattedMonthName} ${year}`"></PageHeader>
+    <PageContent v-if="dates" class="flex flex-col gap-5 p-6">
+        <div v-for="date in filteredDates" :key="date.date" class="flex flex-col" @click="date.collapsed = !date.collapsed">
+            <h1 class="font-bold italic text-2xl border-b border-border p-2 select-none sticky top-0">{{ date.date }}</h1>
+            <div class="flex flex-col overflow-hidden mt-1" :class="{ 'h-0': date.collapsed }">
                 <div
                     v-for="transaction in date.transactions"
                     :key="transaction.id"
-                    class="flex justify-between px-6 py-2 hover:bg-gray-100 rounded-lg"
+                    class="flex justify-between px-6 py-2 hover:bg-muted rounded-lg"
                 >
                     <p>{{ transaction.name }}</p>
                     <p class="font-medium" :class="{ 'text-state-danger-500': transaction.isExpense }">
@@ -76,5 +76,5 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-    </div>
+    </PageContent>
 </template>

@@ -15,17 +15,17 @@ const ICON_DELAY_INTERVAL = 0.25;
 
 const iconMotions: MotionProps = {
     initial: { strokeWidth: 0, opacity: 0, rotate: -90, left: "10%" },
-    animate: { strokeWidth: 0.25, opacity: 0.05, rotate: 0, left: "0%" },
+    animate: { strokeWidth: 0.25, opacity: 0.2, rotate: 0, left: "0%" },
     transition: { type: "spring", delay: ICON_DELAY_INTERVAL * props.delayIndex },
 };
 </script>
 
 <template>
-    <div class="relative p-10 rounded border bg-card overflow-hidden">
+    <div class="relative p-10 rounded border border-border bg-card/50 backdrop-blur-xs overflow-hidden">
         <h3 class="text-md xl:text-lg font-semibold">{{ title }}</h3>
         <small class="line-clamp-2">{{ description }}</small>
         <motion.svg asChild v-bind="iconMotions">
-            <component :is="icon" :size="200" class="absolute top-0 group-hover:opacity-15!" />
+            <component :is="icon" :size="200" class="absolute top-0 group-hover:opacity-15! text-primary" />
         </motion.svg>
     </div>
 </template>

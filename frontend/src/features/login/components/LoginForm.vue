@@ -72,7 +72,7 @@ onMounted(() => {
         <Form
             :formSchema="formSchema"
             :form="form"
-            class="flex flex-col gap-4 p-10 sm:p-15 md:shadow-xl bg-white rounded-xl"
+            class="flex flex-col gap-4 p-10 sm:p-15 md:shadow-xl bg-card rounded-xl"
             @submit.prevent=""
         >
             <FormFieldGroup field="email">
@@ -91,7 +91,7 @@ onMounted(() => {
             </FormFieldGroup>
             <FormFooter class="flex flex-col gap-6">
                 <div class="flex flex-col mt-4 gap-3">
-                    <Button class="rounded-xs py-5" @click="handleLogin" type="submit" :disabled="form.submitting.value"> Sign in </Button>
+                    <Button class="rounded-xs py-5" @click="handleLogin" type="submit" :disabled="form.submitting.value">Login</Button>
                     <Button variant="outline" class="rounded-xs py-5" @click="handleSignUp" type="submit" :disabled="form.submitting.value">
                         Sign up
                     </Button>
@@ -99,13 +99,11 @@ onMounted(() => {
                 <TextDivider>or</TextDivider>
                 <Button variant="outline" class="relative rounded-xs py-5" @click="googleRedirect" :disabled="form.submitting.value">
                     <img class="absolute left-2" src="@/assets/icons/google.svg" width="20" />
-                    Sign in with Google
+                    Continue with Google
                 </Button>
                 <div class="flex flex-col items-center mt-10 mx-auto">
                     <small class="text-center"> Want to try it out first? </small>
-                    <Button class="text-violet-600 hover:text-violet-700 hover:bg-violet-50" variant="ghost" @click="signUpAsGuest">
-                        Continue as guest
-                    </Button>
+                    <Button class="text-primary hover:bg-accent/50" variant="ghost" @click="signUpAsGuest"> Continue as guest </Button>
                 </div>
             </FormFooter>
         </Form>

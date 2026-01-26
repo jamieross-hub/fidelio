@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { motion } from "motion-v";
 import { CalendarIcon, CurrencyIcon, GlobeIcon } from "lucide-vue-next";
-import { fadeInFromBottom } from "@/lib/motions";
+import { fadeInFromTop } from "@/lib/motions";
 
 const infoCards = [
     {
@@ -24,12 +24,12 @@ const infoCards = [
 
 <template>
     <div>
-        <motion.div v-bind="fadeInFromBottom" class="flex w-full flex-wrap gap-5 max-xl:justify-center max-xl:text-center">
+        <motion.div v-bind="fadeInFromTop" class="flex w-full flex-wrap gap-5 max-xl:justify-center max-xl:text-center">
             <motion.img
                 :whilePress="{ scale: 0.9 }"
                 :drag="true"
                 :dragConstraints="{ top: 0, right: 0, bottom: 0, left: 0 }"
-                class="bg-white border rounded-full p-5 shadow-lg min-w-[100px] w-[100px] h-[100px] drag-none z-1"
+                class="bg-white border rounded-full p-5 shadow-lg min-w-25 w-25 h-25 drag-none z-1"
                 src="/192w/icon.png"
             />
             <div class="flex flex-col justify-center">
