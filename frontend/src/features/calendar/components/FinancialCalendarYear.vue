@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+import { mdiChevronLeft, mdiChevronRight, mdiChevronDoubleRight, mdiChevronDoubleLeft } from "@mdi/js";
 
 interface Props {
     year: number;
@@ -16,18 +16,29 @@ const emit = defineEmits<Emits>();
 </script>
 
 <template>
-    <div class="flex w-full justify-between items-center">
-        <div class="p-1 cursor-pointer hover:bg-gray-100">
-            <SvgIcon type="mdi" :path="mdiChevronLeft" @click="emit('update:year', year - 1)" class="cursor-pointer" />
+    <div class="flex justify-between items-center">
+        <div class="p-1 cursor-pointer hover:bg-card">
+            <RouterLink v-if="year > new Date().getFullYear()" :to="{ name: 'year', params: { year: new Date().getFullYear() } }">
+                <SvgIcon type="mdi" :path="mdiChevronDoubleLeft" />
+            </RouterLink>
+        </div>
+        <div class="p-1 cursor-pointer hover:bg-card">
+            <RouterLink :to="{ name: 'year', params: { year: year - 1 } }">
+                <SvgIcon type="mdi" :path="mdiChevronLeft" class="cursor-pointer" />
+            </RouterLink>
         </div>
         <div class="flex flex-col gap-1 items-center">
             <h1 class="text-lg font-medium select-none">{{ year }}</h1>
-            <div v-if="year !== new Date().getFullYear()" class="cursor-pointer" @click="emit('update:year', new Date().getFullYear())">
-                Go to current year
-            </div>
         </div>
-        <div class="p-1 cursor-pointer hover:bg-gray-100">
-            <SvgIcon type="mdi" :path="mdiChevronRight" @click="emit('update:year', year + 1)" />
+        <div class="p-1 cursor-pointer hover:bg-card">
+            <RouterLink :to="{ name: 'year', params: { year: year + 1 } }">
+                <SvgIcon type="mdi" :path="mdiChevronRight" class="cursor-pointer" />
+            </RouterLink>
+        </div>
+        <div class="p-1 cursor-pointer hover:bg-card">
+            <RouterLink v-if="year < new Date().getFullYear()" :to="{ name: 'year', params: { year: new Date().getFullYear() } }">
+                <SvgIcon type="mdi" :path="mdiChevronDoubleRight" />
+            </RouterLink>
         </div>
     </div>
 </template>
