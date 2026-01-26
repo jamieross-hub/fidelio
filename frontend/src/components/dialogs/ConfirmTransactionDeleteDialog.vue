@@ -34,7 +34,7 @@ defineExpose({
             }
         "
     >
-        <AlertDialogContent>
+        <AlertDialogContent class="w-fit border-border">
             <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
@@ -46,7 +46,7 @@ defineExpose({
                     <Button variant="secondary">Cancel</Button>
                 </AlertDialogCancel>
                 <AlertDialogAction asChild>
-                    <Button @click="emit('confirm', true)">Continue</Button>
+                    <Button variant="destructive" @click="emit('confirm', true)">Delete</Button>
                 </AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
