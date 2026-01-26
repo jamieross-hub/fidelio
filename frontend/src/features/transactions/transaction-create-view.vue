@@ -219,7 +219,7 @@ useResizeObserver(boxes, (entries) => {
 </script>
 
 <template>
-    <div class="h-full flex flex-col overflow-hidden" :class="{ 'slide-in': previousRoute }">
+    <div class="w-full h-full flex flex-col overflow-hidden" :class="{ 'slide-in': previousRoute }">
         <div class="w-full h-full max-h-full max-w-full overflow-y-auto flex flex-col items-center justify-start gap-10 py-10">
             <!-- Step Header -->
             <div class="text-center py-0 px-8 sm:px-16">
@@ -550,7 +550,7 @@ useResizeObserver(boxes, (entries) => {
 
                 <!-- STEP 6 -->
                 <template v-if="step === 6">
-                    <div class="border-1 flex flex-col p-8 w-full max-w-[420px] rounded-sm gap-6">
+                    <div class="bg-card border border-border flex flex-col p-8 w-full max-w-[420px] rounded-sm gap-6">
                         <div class="flex w-full justify-between">
                             <p class="font-extralight">Name</p>
                             <p class="font-medium">{{ transactionName }}</p>
@@ -624,7 +624,7 @@ useResizeObserver(boxes, (entries) => {
         </div>
 
         <!-- Buttons -->
-        <div class="flex mt-auto border-t-1 p-3" v-if="step < 7">
+        <div class="flex mt-auto border-t border-border p-3" v-if="step < 7">
             <Button asChild class="h-full" variant="secondary">
                 <RouterLink :to="exitLink" class="h-full">Exit</RouterLink>
             </Button>
@@ -680,6 +680,8 @@ useResizeObserver(boxes, (entries) => {
 }
 
 .boxes.shadow-both {
-    box-shadow: inset -10px 0px 10px -11px #a3a3a3, inset 10px 0px 10px -11px #a3a3a3;
+    box-shadow:
+        inset -10px 0px 10px -11px #a3a3a3,
+        inset 10px 0px 10px -11px #a3a3a3;
 }
 </style>
