@@ -2,7 +2,7 @@
 
 Fidelio is a modern personal finance & cashflow tracking application. It lets users record and analyse income and expense transactions (one‑off or recurring), schedule future cash movements, and maintain a clear snapshot of their financial runway. Recurring rules (weekly, monthly, yearly, specific day of week/month, first/last business day) and optional start/finish windows add rich flexibility. A responsive Vue frontend consumes a typed TypeScript/Express API powered by PostgreSQL & Prisma. CI/CD builds and deploys the backend in Docker images to staging and production via GitHub Actions.
 
----
+--- 
 
 ## Key Features
 
